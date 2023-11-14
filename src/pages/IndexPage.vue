@@ -1,11 +1,11 @@
 <template>
-  <q-page class="row items-center justify-evenly">
-    <example-component
-      title="Example component"
-      active
-      :todos="todos"
-      :meta="meta"
-    ></example-component>
+  <q-page class="row items-center justify-evenly ">
+      <q-img
+      src="../../public/img/inicioSesion.jpg"
+      style="max-width:100%;
+              max-height: 100%;"
+
+      />
   </q-page>
 </template>
 
