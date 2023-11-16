@@ -11,25 +11,15 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title>
-          
-        </q-toolbar-title>
+        <q-toolbar-title> </q-toolbar-title>
 
         <div></div>
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-    >
+    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
       <q-list>
-        <q-item-label
-          header
-        >
-          Menu Principal
-        </q-item-label>
+        <q-item-label header> Menu Principal </q-item-label>
 
         <EssentialLink
           v-for="link in essentialLinks"
@@ -47,35 +37,36 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import EssentialLink, { EssentialLinkProps } from 'components/EssentialLink.vue';
+import EssentialLink, {
+  EssentialLinkProps,
+} from 'components/EssentialLink.vue';
 
 const essentialLinks: EssentialLinkProps[] = [
   {
     title: 'Pedido',
-    link: ''
+    link: '',
   },
   {
     title: 'Proveedor',
-    link: ''
+    link: '',
   },
   {
-    title: 'ClienteS',
-    link: ''
+    title: 'Clientes',
+    link: '',
   },
   {
     title: 'Productos',
-    link: ''
+    link: '',
   },
   {
     title: 'Usuarios',
-    link: ''
+    link: '',
   },
-
 ];
 
-const leftDrawerOpen = ref(false)
+const leftDrawerOpen = ref(false);
 
 function toggleLeftDrawer() {
-  leftDrawerOpen.value = !leftDrawerOpen.value
+  leftDrawerOpen.value = !leftDrawerOpen.value;
 }
 </script>
