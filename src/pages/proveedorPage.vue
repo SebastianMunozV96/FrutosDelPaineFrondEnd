@@ -1,10 +1,13 @@
 <template>
   <div class="q-pa-md">
+    <q-btn unelevated color="primary" label="Crear Proveedor">
+
+</q-btn>
     <q-table
       style="height: 400px"
       flat
       bordered
-      title="Treats"
+      title="Tabla de Proveedores"
       :rows="proveedoresRow"
       :columns="columns"
       virtual-scroll

@@ -1,5 +1,8 @@
 <template>
   <div class="q-pa-md">
+    <q-btn unelevated color="primary" label="Crear Cliente">
+
+</q-btn>
     <q-table
       style="height: 400px"
       flat

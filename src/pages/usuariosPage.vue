@@ -1,10 +1,16 @@
 <template>
   <div class="q-pa-md">
+    <q-btn unelevated color="primary" label="Crear Usuarios">
+
+    </q-btn>
+    <br>
     <q-table
       style="height: 400px"
       flat
       bordered
-      title="Treats"
+
+      title="Tabla de Usuarios"
+
       :rows="usuariosRow"
       :columns="columns"
       virtual-scroll
