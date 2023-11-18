@@ -21,8 +21,8 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import axios, { api } from '../boot/axios';
-import { KeyObject } from 'crypto';
+import { api } from '../boot/axios';
+
 
 interface Usuario {
   id: number;

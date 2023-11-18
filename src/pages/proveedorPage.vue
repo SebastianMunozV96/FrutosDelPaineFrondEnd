@@ -1,6 +1,6 @@
 <template>
   <div class="q-pa-md">
-    <q-btn unelevated color="primary" label="Crear Proveedor">
+    <q-btn unelevated color="primary" label="Crear Proveedor" @click="openDialog">
 
 </q-btn>
     <q-table
@@ -10,26 +10,36 @@
       title="Tabla de Proveedores"
       :rows="proveedoresRow"
       :columns="columns"
-      virtual-scroll
-      :rows-per-page-options="[0]"
+
+
+    />
+    <crearProducto
+    :dialog-visible="dialogVisible"
+    @update:dialog-visible="updateDialogVisible"
     />
   </div>
+
+
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import axios, { api } from '../boot/axios';
+import  { api } from '../boot/axios';
+import { Proveedor } from 'src/models/proveedor.model';
+import crearProducto from 'src/components/crearProducto.vue';
 
-interface Proveedor {
-  id: number;
-  rut: string | null;
-  giro: number | null;
-  nombre: string | null;
-  telefono: number | null;
-  correo: string | null;
-  pagina_web: string | null;
-  direcciones_id: number;
-}
+
+
+
+const dialogVisible =ref<boolean>(false);
+
+const openDialog = () => {
+  dialogVisible.value = true;
+};
+
+const updateDialogVisible = async (value: boolean) => {
+  dialogVisible.value = value;
+};
 
 const columns = ref();
 
@@ -41,11 +51,18 @@ const getProveedores = async () => {
 const proveedoresRow = ref<Proveedor[]>([]);
 
 onMounted(async () => {
+  getProveedores()
+    .then((response)=>{
+      proveedoresRow.value = response;
+      console.log(proveedoresRow.value)
+    })
+    .catch((error)=> console.log('error al obtener los datos',error))
   proveedoresRow.value = await getProveedores();
-  columns.value = Object.keys(proveedoresRow.value).map((key) => ({
+  columns.value = Object.keys(proveedoresRow.value!).map((key) => ({
     field: key,
     name: key.toUpperCase(),
     label: key,
   }));
 });
+
 </script>

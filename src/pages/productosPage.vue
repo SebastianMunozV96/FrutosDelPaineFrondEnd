@@ -1,6 +1,6 @@
 <template>
   <div class="q-pa-md">
-    <q-btn unelevated color="primary" label="Crear Producto">
+    <q-btn unelevated color="primary" label="Crear Producto" @click="openDialog">
 
     </q-btn>
     <q-table
@@ -10,24 +10,32 @@
       title="Tabla de Productos"
       :rows="productosRow"
       :columns="columns"
-      virtual-scroll
-      :rows-per-page-options="[0]"
     />
+    <CrearProducto
+    :dialogVisible="dialogVisible"
+    @update:dialogVisible="updateDialogVisible"
+    />
+
   </div>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import axios, { api } from '../boot/axios';
+import  { api } from '../boot/axios';
+import CrearProducto from 'src/components/crearProducto.vue';
+import { Producto } from 'src/models/producto.model';
 
-interface Producto {
-  id: number;
-  descripcion: string | null;
-  peso_gramos: number | null;
-  precio_neto: number | null;
-  stock: number | null;
-  cod_barras: string | null;
-  Categorias_id: number;
+
+
+
+const dialogVisible = ref <boolean>(false);
+
+const openDialog= () =>{
+dialogVisible.value= true;
+};
+
+const updateDialogVisible = async (value :boolean) => {
+  dialogVisible.value = value;
 }
 
 const columns = ref();
@@ -40,6 +48,13 @@ const getProductos = async () => {
 const productosRow = ref<Producto[]>([]);
 
 onMounted(async () => {
+  getProductos()
+   .then((response)=>{
+    productosRow.value=response;
+    console.log(productosRow.value)
+   })
+   .catch((error)=> console.log('error al obtener datos',error));
+
   productosRow.value = await getProductos();
   columns.value = Object.keys(productosRow.value).map((key) => ({
     field: key,

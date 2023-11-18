@@ -44,13 +44,13 @@ import EssentialLink, {
 const essentialLinks: EssentialLinkProps[] = [
   {
     title: 'Pedido',
-
-    link: '',
+    icon:'shopping_cart_checkout',
+    link: 'pedidos',
   },
   {
     title: 'Proveedor',
     icon: 'local_shipping',
-    link: '',
+    link: 'proveedores',
   },
   {
     title: 'Clientes',
@@ -59,11 +59,13 @@ const essentialLinks: EssentialLinkProps[] = [
   },
   {
     title: 'Productos',
-    link: '',
+    icon:'agriculture',
+    link: 'productos',
   },
   {
     title: 'Usuarios',
-    link: '',
+    icon:'group',
+    link: 'usuarios',
   },
 ];
 
