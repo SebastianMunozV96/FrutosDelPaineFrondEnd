@@ -15,7 +15,7 @@
 import { useRouter } from 'vue-router';
 
 const router = useRouter()
-export interface EssentialLinkProps {
+ interface EssentialLinkProps {
   title: string;
   caption?: string;
   link?: string;

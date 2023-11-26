@@ -1,6 +1,6 @@
 <template>
   <div class="q-pa-md">
-    <q-btn unelevated color="primary" label="Crear Pedido">
+    <q-btn unelevated color="primary" label="Crear Pedido" @click="CrearPedido" >
 
 </q-btn>
     <q-table
@@ -11,7 +11,7 @@
       :rows="ventasRow"
       :columns="columns"
       virtual-scroll
-      :rows-per-page-options="[0]"
+      
     />
   </div>
 </template>
@@ -48,4 +48,13 @@ onMounted(async () => {
     label: key,
   }));
 });
+
+const CrearPedido = ref(false);
+
+function CrearPedidoForm (){
+  CrearPedido.value = CrearPedido.value!
+}
+
+
+
 </script>

@@ -16,7 +16,7 @@
 import { computed, ref } from 'vue';
 import { Todo, Meta } from './models';
 
-interface Props {
+export interface Props {
   title: string;
   todos?: Todo[];
   meta: Meta;
