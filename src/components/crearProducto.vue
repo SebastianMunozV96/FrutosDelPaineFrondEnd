@@ -3,6 +3,7 @@
     <q-card>
       <q-card-section>
         <div class="text-center text-h5 q-pb-md" >
+          
           Crear un nuevo Producto
         </div>
         <q-form @submi="procesarFormulario">
@@ -16,7 +17,7 @@
           />
           <q-input
           v-model="peso_gramos"
-          label="Ingrese pedo en gramos"
+          label="Ingrese peso en gramos"
           />
 
           <q-input
@@ -42,7 +43,7 @@
         </q-form>
       </q-card-section>
       <q-card-actions align="right">
-        <q-btn color="secondary" type="submit" label="crear" />
+        <q-btn color="secondary" type="submit" label="crear" @click="procesarFormulario" />
         <q-btn color="negative" label="Cancel" @click="closeDialog" />
       </q-card-actions>
     </q-card>

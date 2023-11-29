@@ -10,6 +10,7 @@
       title="Tabla de Productos"
       :rows="productosRow"
       :columns="columns"
+      no-data-label="No se encontro ningun Producto"
     />
     <CrearProducto
     :dialogVisible="dialogVisible"

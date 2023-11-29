@@ -14,7 +14,8 @@
       :rows="usuariosRow"
       :columns="columns"
       virtual-scroll
-      :rows-per-page-options="[0]"
+     
+      no-data-label="No se encontro ningun Usuario"
     />
   </div>
 </template>

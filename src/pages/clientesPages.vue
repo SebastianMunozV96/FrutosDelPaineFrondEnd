@@ -8,9 +8,20 @@
       flat
       bordered
       title="Tabla de Clientes"
+      no-data-label="No se encontro ningun cliente"
       :rows="clientesRow"
       :columns="columns"
+     
+      
     />
+    <template>
+      <q-btn unelevated color="" label="Eliminar " >
+
+      </q-btn>
+      <q-btn unelevated color="" label="Editar">
+
+      </q-btn>
+    </template>
     <CrearCliente
       :dialogVisible="dialogVisible"
       @update:dialogVisible="updateDialogVisible"

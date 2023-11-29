@@ -60,7 +60,6 @@
 
 <script setup lang="ts">
 import { response } from 'express';
-import { emitKeypressEvents } from 'readline';
 import {api} from 'src/boot/axios';
 import { Proveedor,insertProveedor} from 'src/models/proveedor.model';
 import {ref,toRefs,defineEmits} from 'vue';

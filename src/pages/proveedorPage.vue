@@ -10,11 +10,13 @@
       title="Tabla de Proveedores"
       :rows="proveedoresRow"
       :columns="columns"
+      no-data-label="No se encontro ningun Proveedor"
+    
 
 
     />
-    <crearProducto
-    :dialog-visible="dialogVisible"
+    <CrearProovedor
+    :dialog-visible="dialogVisiblePRo"
     @update:dialog-visible="updateDialogVisible"
     />
   </div>
@@ -26,19 +28,19 @@
 import { onMounted, ref } from 'vue';
 import  { api } from '../boot/axios';
 import { Proveedor } from 'src/models/proveedor.model';
-import crearProducto from 'src/components/crearProducto.vue';
+import crearProveedor from 'src/components/crearProveedor.vue';
 
 
 
 
-const dialogVisible =ref<boolean>(false);
+const dialogVisiblePRo =ref<boolean>(false);
 
 const openDialog = () => {
-  dialogVisible.value = true;
+  dialogVisiblePRo.value = true;
 };
 
 const updateDialogVisible = async (value: boolean) => {
-  dialogVisible.value = value;
+  dialogVisiblePRo.value = value;
 };
 
 const columns = ref();
