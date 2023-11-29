@@ -15,7 +15,8 @@
 
 
     />
-    <CrearProovedor
+
+    <CrearProoveedo
     :dialog-visible="dialogVisiblePRo"
     @update:dialog-visible="updateDialogVisible"
     />
@@ -28,7 +29,7 @@
 import { onMounted, ref } from 'vue';
 import  { api } from '../boot/axios';
 import { Proveedor } from 'src/models/proveedor.model';
-import crearProveedor from 'src/components/crearProveedor.vue';
+import CrearProoveedor from 'src/components/crearProveedor.vue';
 
 
 

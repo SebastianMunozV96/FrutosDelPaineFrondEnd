@@ -15,10 +15,10 @@
       
     />
     <template>
-      <q-btn unelevated color="" label="Eliminar " >
+      <q-btn unelevated color="" label="Eliminar " @click="EliminarCol" >
 
       </q-btn>
-      <q-btn unelevated color="" label="Editar">
+      <q-btn unelevated color="" label="Editar" @click="EditarCol">
 
       </q-btn>
     </template>
@@ -46,6 +46,14 @@ const updateDialogVisible = async (value: boolean) => {
 };
 
 const columns = ref();
+
+
+const EditarCol = async () =>{
+
+}
+const EliminarCol = async () =>{
+
+}
 
 const getClientes = async () => {
   const clientes = await api.get<Cliente[]>('/clientes');

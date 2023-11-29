@@ -11,33 +11,40 @@
           class="q-pb-md"
           v-model="rut"
           label="Ingrese rut"
-          rule=""
+          rule="(val) => !!val || 'Este campo es obligatorio',
+        (val) => (val && val.length >= 11) || 'El rut debe tener al menos 11 caracteres',"
 
           />
           <q-input
           v-model="giro"
           label="Ingrese giro"
+          rule="(val) => !!val || 'Este campo es obligatorio',
+        (val) => (val && val.length >= ) || 'El rut debe tener al menos 11 caracteres',"
           />
 
           <q-input
           v-model="nombre"
           label="Ingrese Nombre"
+          rule="(val) => !!val || 'Este campo es obligatorio'"
           />
 
           <q-input
           type="number"
           v-model="telefono"
           label="Ingrese telefono"
+          rule="(val) => !!val || 'Este campo es obligatorio'"
           />
 
           <q-input
           type="email"
           v-model="correo"
           label="Ingrese su Correo"
+          rule="(val) => !!val || 'Este campo es obligatorio'"
           />
           <q-input
           v-model="pagina_web"
           label="Ingrese la pagina web "
+          rule="(val) => !!val || 'Este campo es obligatorio'"
           />
 
 
@@ -45,6 +52,7 @@
           type="number"
           v-model="Direcciones_id"
           label="Ingrese direccion"
+          rule="(val) => !!val || 'Este campo es obligatorio'"
           />
         </q-form>
       </q-card-section>

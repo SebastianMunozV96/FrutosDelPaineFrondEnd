@@ -37,9 +37,7 @@ const password = ref<string>();
 
 const inicioSesion= () => {
 
-
-}
-
+};
 
 
 

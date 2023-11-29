@@ -12,38 +12,42 @@
           class="q-pb-md"
           v-model="descripcion"
           label="Ingrese una descripcion"
-          rule=""
+          rule="(val) => !!val || 'Este campo es obligatorio'"
 
           />
           <q-input
           v-model="peso_gramos"
           label="Ingrese peso en gramos"
+        
           />
 
           <q-input
           v-model="precio_neto"
           label="Ingrese precio"
+        
           />
 
           <q-input
-
           v-model="stock"
           label="Ingrese stock"
+          
           />
 
           <q-input
           v-model="cod_barra"
           label="Ingrese su Codigo de barra"
+        
           />
           <q-input
           type="number"
           v-model="Categoria_id"
           label="Ingrese la categoria"
+        
           />
         </q-form>
       </q-card-section>
       <q-card-actions align="right">
-        <q-btn color="secondary" type="submit" label="crear" @click="procesarFormulario" />
+        <q-btn color="secondary" type="submit" label="crear"  />
         <q-btn color="negative" label="Cancel" @click="closeDialog" />
       </q-card-actions>
     </q-card>

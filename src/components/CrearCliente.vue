@@ -11,33 +11,38 @@
           class="q-pb-md"
           v-model="rut"
           label="Ingrese rut"
-          rule=""
+          rule="(val) => !!val || 'Este campo es obligatorio'"
 
           />
           <q-input
           v-model="nombre"
           label="Ingrese Nombre"
+          
           />
 
           <q-input
           v-model="apellido"
           label="Ingrese apellido"
+          
           />
 
           <q-input
           type="email"
           v-model="correo"
           label="Ingrese Correo"
+          
           />
 
           <q-input
           v-model="celular"
           label="Ingrese su Celular"
+          
           />
           <q-input
           type="number"
           v-model="direccion_id"
           label="Ingrese direccion"
+          
           />
         </q-form>
       </q-card-section>
