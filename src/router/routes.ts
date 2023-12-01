@@ -15,11 +15,13 @@ const routes: RouteRecordRaw[] = [
         path: '/pedidos',
         name: 'pedidos',
         component: () => import('pages/pedidoPage.vue'),
-        children : [
-          {path: '/crearPedido', 
-            name:'crearPedido',
-            component: ()=>import('../pages/crearPedidoPages.vue')}
-        ]
+        children: [
+          {
+            path: '/crearPedido',
+            name: 'crearPedido',
+            component: () => import('../pages/crearPedidoPages.vue'),
+          },
+        ],
       },
       {
         path: '/productos',
@@ -32,19 +34,16 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/proveedorPage.vue'),
       },
       {
-        path: '/usuarios',
-        name: 'usuarios',
-        component: () => import('pages/usuariosPage.vue'),
+        path: '/colaboradores',
+        name: 'colaboradores',
+        component: () => import('pages/colaboradorPage.vue'),
       },
     ],
-
-
   },
   {
     path: '/login',
-    name:'login',
-    component: ()=> import('../layouts/login.vue')
-
+    name: 'login',
+    component: () => import('../layouts/login.vue'),
   },
 
   // Always leave this as last one,
