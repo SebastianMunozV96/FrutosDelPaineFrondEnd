@@ -36,15 +36,7 @@
           <q-td key="celular" :props="props">
             {{ props.row.celular }}
           </q-td>
-          <q-td key="direccion_id" :props="props">
-            {{ props.row.direccion_id }}
-          </q-td>
-          <q-td key="Direcciones" :props="props">
-            {{ props.row.Direcciones.id }}
-          </q-td>
-          <q-td key="Direcciones" :props="props">
-            {{ props.row.Direcciones.calle }}
-          </q-td>
+
           <q-td key="update" :props="props">
             <q-btn round color="blue" label="Editar">
               <q-icon name="edit" />
