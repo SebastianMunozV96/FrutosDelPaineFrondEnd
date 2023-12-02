@@ -1,6 +1,6 @@
 <template>
   <div class="q-pa-md">
-    <q-btn unelevated color="primary" label="Crear Pedido" @click="CrearPedido" >
+    <q-btn unelevated color="primary" label="Crear Pedido" @click="CrearPedidoForm" >
 
 </q-btn>
     <q-table
@@ -11,15 +11,16 @@
       :rows="ventasRow"
       :columns="columns"
       virtual-scroll
+
       no-data-label="No se encontro ningun Pedido"
-      
+
     />
   </div>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import axios, { api } from '../boot/axios';
+import { api } from '../boot/axios';
 
 interface Venta {
   id: number;

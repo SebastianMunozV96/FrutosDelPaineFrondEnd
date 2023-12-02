@@ -14,6 +14,7 @@ const routes: RouteRecordRaw[] = [
       {
         path: '/pedidos',
         name: 'pedidos',
+
         component: () => import('pages/pedidoPage.vue'),
         // children: [
         //   {
@@ -22,6 +23,7 @@ const routes: RouteRecordRaw[] = [
         //     component: () => import('../pages/crearPedidoPages.vue'),
         //   },
         // ],
+
       },
       {
         path: '/productos',
@@ -51,6 +53,7 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/LoginPage.vue'),
       },
     ]
+
   },
 
   // Always leave this as last one,
