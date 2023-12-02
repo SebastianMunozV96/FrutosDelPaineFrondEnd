@@ -1,4 +1,3 @@
-
 export type Cliente = {
   id: number;
   rut: string | null;
@@ -6,7 +5,11 @@ export type Cliente = {
   apellido: string;
   correo: string;
   celular: string;
-  direccion_id: number | null;
-}
+};
 
-export type ClienteInsert = Omit<Cliente, 'id'>
+export type ClienteInsert = Omit<Cliente, 'id'>;
+
+export type ClienteDelete = Cliente;
+
+export type ClienteUpdate = Cliente;
+

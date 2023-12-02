@@ -14,8 +14,10 @@ declare module '@vue/runtime-core' {
 // good idea to move this instance creation inside of the
 // "export default () => {}" function below (which runs individually
 // for each client)
+
 const serverURL = process.env.NODE_ENV == 'production' ? 'https://frutosdelpaine.onrender.com/api/v1/' : 'http://localhost:5000/api/v1'
 const api = axios.create({ baseURL: serverURL });
+
 
 export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api

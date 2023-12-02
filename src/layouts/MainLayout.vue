@@ -37,14 +37,14 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import EssentialLink, {
-  EssentialLinkProps,
-} from 'components/EssentialLink.vue';
+import EssentialLink from 'components/EssentialLink.vue';
+import { EssentialLinkProps } from 'src/components/models';
+
 
 const essentialLinks: EssentialLinkProps[] = [
   {
     title: 'Pedido',
-    icon:'shopping_cart_checkout',
+    icon: 'shopping_cart_checkout',
     link: 'pedidos',
   },
   {
@@ -59,13 +59,13 @@ const essentialLinks: EssentialLinkProps[] = [
   },
   {
     title: 'Productos',
-    icon:'agriculture',
+    icon: 'agriculture',
     link: 'productos',
   },
   {
-    title: 'Usuarios',
-    icon:'group',
-    link: 'usuarios',
+    title: 'Colaboradores',
+    icon: 'group',
+    link: 'colaboradores',
   },
 ];
 

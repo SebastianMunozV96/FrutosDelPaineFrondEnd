@@ -12,6 +12,8 @@
       :columns="columns"
       virtual-scroll
 
+      no-data-label="No se encontro ningun Pedido"
+
     />
   </div>
 </template>

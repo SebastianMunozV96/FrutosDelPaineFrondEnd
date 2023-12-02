@@ -2,68 +2,76 @@
   <q-dialog v-model="dialogVisible">
     <q-card>
       <q-card-section>
-        <div class="text-center text-h5 q-pb-md" >
-          Crear un nuevo Proveedor
-        </div>
+        <div class="text-center text-h5 q-pb-md">Crear un nuevo Proveedor</div>
         <q-form @submi="procesarFormulario">
-
           <q-input
-          class="q-pb-md"
-          v-model="rut"
-          label="Ingrese rut"
-          rule=""
-
+            class="q-pb-md"
+            v-model="rut"
+            label="Ingrese rut"
+            mask="########-#"
+            unmasked-value
+            :rules="[(val) => !!val || 'Este campo es obligatorio']"
           />
           <q-input
-          v-model="giro"
-          label="Ingrese giro"
-          />
-
-          <q-input
-          v-model="nombre"
-          label="Ingrese Nombre"
+            v-model="giro"
+            label="Ingrese giro"
+            mask="###.##"
+            unmasked-value
+            :rules="[(val) => !!val || 'Este campo es obligatorio']"
           />
 
           <q-input
-          type="number"
-          v-model="telefono"
-          label="Ingrese telefono"
+            v-model="nombre"
+            label="Ingrese Nombre"
+            mask="SSSSSSSSSSSSSSSSSSSSSSSSSSS"
+            unmasked-value
+            :rules="[(val) => !!val || 'Este campo es obligatorio']"
           />
 
           <q-input
-          type="email"
-          v-model="correo"
-          label="Ingrese su Correo"
-          />
-          <q-input
-          v-model="pagina_web"
-          label="Ingrese la pagina web "
+            v-model="telefono"
+            label="Ingrese telefono"
+            mask="(+56) # #### ####"
+            unmasked-value
+            :rules="[(val) => !!val || 'Este campo es obligatorio']"
           />
 
-
           <q-input
-          type="number"
-          v-model="Direcciones_id"
-          label="Ingrese direccion"
+            type="email"
+            v-model="correo"
+            label="Ingrese su Correo"
+            :rules="[
+              (val) => !!val || 'Este campo es obligatorio',
+              (val) => /.+@.+\..+/.test(val) || 'Correo no Valido',
+            ]"
+          />
+          <q-input
+            v-model="pagina_web"
+            label="Ingrese la pagina web "
+            mask="WWW.SSSSSSSSS.SSS"
+            unmasked-value
+            :rules="[(val) => !!val || 'Este campo es obligatorio']"
           />
         </q-form>
       </q-card-section>
       <q-card-actions align="right">
-        <q-btn color="secondary" type="submit" label="crear" />
+        <q-btn
+          color="secondary"
+          type="submit"
+          label="crear"
+          @click="procesarFormulario"
+        />
         <q-btn color="negative" label="Cancel" @click="closeDialog" />
       </q-card-actions>
     </q-card>
   </q-dialog>
 </template>
 
-
-
 <script setup lang="ts">
 import { response } from 'express';
-import { emitKeypressEvents } from 'readline';
-import {api} from 'src/boot/axios';
-import { Proveedor,insertProveedor} from 'src/models/proveedor.model';
-import {ref,toRefs,defineEmits} from 'vue';
+import { api } from 'src/boot/axios';
+import { Proveedor, ProveedorInsert } from '../models/proveedor.model';
+import { ref, toRefs, defineEmits } from 'vue';
 
 const props = defineProps<{ dialogVisible: boolean }>();
 const { dialogVisible } = toRefs(props);
@@ -71,41 +79,37 @@ const emits = defineEmits(['update:dialogVisible']);
 
 const showDialog = ref<boolean>(false);
 
-const rut = ref<number>();
-const giro = ref<number>();
-const nombre = ref<string>();
-const telefono=ref<number>();
-const correo =ref<string>();
-const pagina_web=ref<string>();
-const Direcciones_id=ref<number>();
+const rut = ref();
+const giro = ref();
+const nombre = ref();
+const telefono = ref();
+const correo = ref();
+const pagina_web = ref();
+const Direccion_id = ref(1);
 
 const procesarFormulario = () => {
-
   const proveedorForm = {
-    rut:null,
-    giro:null,
-    nombre:null,
-    telefono:null,
-    correo:null,
-    pagina_web:null,
-    Direcciones_id:0,
+    rut: rut.value,
+    giro: giro.value,
+    nombre: nombre.value,
+    telefono: telefono.value,
+    correo: correo.value,
+    pagina_web: pagina_web.value,
+    Direccion_id: Direccion_id.value,
   };
- ProveedorInsert(proveedorForm)
+  InsertProveedor(proveedorForm);
 
 };
 
-const ProveedorInsert = (proveedor : insertProveedor)=>{
+const InsertProveedor = (proveedor: ProveedorInsert) => {
   api
-   .post('/proveedores', proveedor)
-   .then((response)=> console.log('respuesta del servidor post',response))
-   .catch((error)=> console.log('error en respuesta del servidor',error));
-
+    .post('/proveedores', proveedor)
+    .then((response) => console.log('respuesta del servidor post', response))
+    .catch((error) => console.log('error en respuesta del servidor', error));
+    closeDialog();
 };
 
-const closeDialog = ()=> {
-  emits('update:dialogVisible',false);
+const closeDialog = () => {
+  emits('update:dialogVisible', false);
 };
-
-
-
 </script>

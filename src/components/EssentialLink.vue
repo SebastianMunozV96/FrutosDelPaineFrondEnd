@@ -13,14 +13,9 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
+import { EssentialLinkProps } from 'src/components/models';
+const router = useRouter();
 
-const router = useRouter()
- interface EssentialLinkProps {
-  title: string;
-  caption?: string;
-  link?: string;
-  icon?: string;
-}
 const props = withDefaults(defineProps<EssentialLinkProps>(), {
   caption: '',
   link: '#',
@@ -28,6 +23,6 @@ const props = withDefaults(defineProps<EssentialLinkProps>(), {
 });
 
 const navigateTo = () => {
-  router.push({ name: props.link})
-}
+  router.push({ name: props.link });
+};
 </script>

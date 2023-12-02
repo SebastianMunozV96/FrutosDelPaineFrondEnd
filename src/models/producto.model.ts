@@ -1,4 +1,3 @@
-
 export type Producto = {
   id: number;
   descripcion: string | null;
@@ -7,6 +6,10 @@ export type Producto = {
   stock: number | null;
   cod_barras: string | null;
   Categorias_id: number;
-}
+  
 
-export type ProductoInsert = Omit<Producto,'id'>
+
+};
+
+
+export type ProductoInsert = Omit<Producto, 'id'>;
