@@ -1,8 +1,12 @@
 <template>
   <div class="q-pa-md">
-    <q-btn unelevated color="primary" label="Crear Pedido" @click="CrearPedidoForm" >
-
-</q-btn>
+    <q-btn
+      unelevated
+      color="primary"
+      label="Crear Pedido"
+      
+    >
+    </q-btn>
     <q-table
       style="height: 400px"
       flat
@@ -11,9 +15,7 @@
       :rows="ventasRow"
       :columns="columns"
       virtual-scroll
-
       no-data-label="No se encontro ningun Pedido"
-
     />
   </div>
 </template>
@@ -41,6 +43,9 @@ const getVentas = async () => {
 };
 
 const ventasRow = ref<Venta[]>([]);
+const celularrearPedido = ref(false);
+
+
 
 onMounted(async () => {
   ventasRow.value = await getVentas();
@@ -50,13 +55,4 @@ onMounted(async () => {
     label: key,
   }));
 });
-
-const CrearPedido = ref(false);
-
-function CrearPedidoForm (){
-  CrearPedido.value = CrearPedido.value!
-}
-
-
-
 </script>

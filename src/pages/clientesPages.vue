@@ -73,14 +73,25 @@ const updateDialogVisible = async (value: boolean) => {
   dialogVisible.value = value;
 };
 
-const columns = ref();
+const columns = [
+  {
+    field: 'update',
+    name: 'Actualizar',
+    label: 'update',
+  },
+  {
+    field: 'delete',
+    name: 'Delete',
+    label: 'delete',
+  },
+];
 
 const EditarCol = async (id: number, dato: ClienteUpdate) => {
-  const clientes = await api.put<Cliente[]>(`clientes/${id}`, dato);
+  const clientes = await api.put<Cliente[]>(`/clientes/${id}`, dato);
   return clientes.data;
 };
 const EliminarCol = async (id: number) => {
-  const clientes = await api.delete<Cliente[]>(`usuarios/${id}`);
+  const clientes = await api.delete<Cliente[]>(`/clientes/${id}`);
   return clientes.data;
 };
 
@@ -99,22 +110,17 @@ onMounted(async () => {
     })
     .catch((error) => console.log('error al obtener datos ', error));
 
-  columns.value = Object.keys(clientesRow.value!).map((key) => ({
-    field: key,
-    name: key.toUpperCase(),
-    label: key,
-  }));
   console.log('no Veo los botones');
-  columns.value.push({
-    field: 'update',
-    name: 'Update',
-    label: 'update',
-  });
-  columns.value.push({
-    field: 'delete',
-    name: 'Delete',
-    label: 'delete',
-  });
+  // columns.value.push({
+  //   field: 'update',
+  //   name: 'Update',
+  //   label: 'update',
+  // });
+  // columns.value.push({
+  //   field: 'delete',
+  //   name: 'Delete',
+  //   label: 'delete',
+  // });
 
   console.log(columns);
 });

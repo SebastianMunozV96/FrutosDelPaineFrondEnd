@@ -63,7 +63,7 @@
 
 <script setup lang="ts">
 import { api } from 'src/boot/axios';
-import { Cliente, ClienteInsert } from '../models/cliente.model';
+import { ClienteInsert } from '../models/cliente.model';
 import { ref, toRefs, defineEmits } from 'vue';
 
 const props = defineProps<{ dialogVisible: boolean }>();
