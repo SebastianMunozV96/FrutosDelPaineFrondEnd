@@ -14,12 +14,12 @@ const routes: RouteRecordRaw[] = [
       {
         path: '/pedidos',
         name: 'pedidos',
-        component: () => import('pages/pedidoPage.vue'),
-        children : [
-          {path: '/crearPedido', 
-            name:'crearPedido',
-            component: ()=>import('../pages/crearPedidoPages.vue')}
-        ]
+        component: () => import('pages/pedidoPage.vue')
+      },
+      {
+        path: '/crear-pedido',
+        name: 'crearPedido',
+        component: () => import('../pages/crearPedidoPages.vue')
       },
       {
         path: '/productos',
@@ -42,8 +42,8 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: '/login',
-    name:'login',
-    component: ()=> import('../layouts/login.vue')
+    name: 'login',
+    component: () => import('../layouts/loginLayout.vue')
 
   },
 

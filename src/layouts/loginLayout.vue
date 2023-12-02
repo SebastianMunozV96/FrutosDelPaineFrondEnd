@@ -1,17 +1,17 @@
 <template>
     <div class="q-pa-md">
       <div class="q-gutter-md row items-start">
-        <q-img      
+        <q-img
           src="../../public/img/inicioSesion.jpg"
           style="max-width: 300px; height: 150px;"
         >
          <template>
           <div class="absolute-bottom text-subtitle1 text-center">
            <q-form @submit="inicioSesion">
-            <q-input 
+            <q-input
             type="text"
             v-model="user"
-            label="Ingrese usuario" 
+            label="Ingrese usuario"
              />
              <q-input
              type="password"
@@ -37,7 +37,7 @@ const password = ref<string>();
 
 const inicioSesion= () => {
 
-
+  console.log('inicio sesion')
 }
 
 
