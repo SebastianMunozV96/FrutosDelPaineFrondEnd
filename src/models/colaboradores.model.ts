@@ -8,3 +8,7 @@ export type Colaborador = {
 };
 
 export type ColaboradorInsert = Omit<Colaborador, 'id'>;
+
+export type ColaboradorUpdate = Colaborador;
+
+export type ColaboradorDelete = Colaborador;

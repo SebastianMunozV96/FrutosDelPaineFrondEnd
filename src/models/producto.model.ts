@@ -1,15 +1,22 @@
 export type Producto = {
   id: number;
-  descripcion: string | null;
-  peso_gramos: number | null;
-  precio_neto: number | null;
-  stock: number | null;
-  cod_barras: string | null;
+  descripcion: string ;
+  peso_gramos: number ;
+  precio_neto: number;
+  stock: number ;
+  cod_barras: string ;
   Categorias_id: number;
-  
-
-
 };
 
+export type Categoria = {
+  id: number;
+  categoria: string;
+};
 
-export type ProductoInsert = Omit<Producto, 'id'>;
+export type CreateCategoria = Omit<Categoria, 'id'>;
+
+export type CrearProducto = Omit<Producto, 'id'>;
+
+export type ProductoDelete = Producto;
+
+export type ProductoUpdate = Producto;

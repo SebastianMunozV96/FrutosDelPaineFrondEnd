@@ -18,9 +18,6 @@
     >
       <template #body="props">
         <q-tr :props="props">
-          <q-td key="id" :props="props">
-            {{ props.row.id }}
-          </q-td>
           <q-td key="rut" :props="props">
             {{ props.row.rut }}
           </q-td>
@@ -36,38 +33,41 @@
           <q-td key="correo" :props="props">
             {{ props.row.correo }}
           </q-td>
-          <q-td key="Direccion_id" :props="props">
-            {{ props.row.Direccion_id }}
+          <q-td key="pagina_web" :props="props">
+            {{ props.row.pagina_web }}
           </q-td>
-          <q-td key="calle" :props="props">
-            {{ props.row.Direcciones.calle }}
-          </q-td>
-          <q-td key="Direcciones" :props="props">
-            {{ props.row.Direcciones.calle }}
-          </q-td>
+
           <q-td key="update" :props="props">
-            <q-btn round color="blue" label="Editar">
+            <q-btn size="md" color="blue" label="Editar">
               <q-icon name="edit" />
             </q-btn>
           </q-td>
           <q-td key="delete" :props="props">
-            <q-btn round color="danger" label="Eliminar ">
+            <q-btn
+              size="md"
+              color="red"
+              label="Eliminar "
+              @click="deleteProveedor(props.row.id)"
+            >
               <q-icon name="delete" />
             </q-btn>
           </q-td>
         </q-tr>
-      </template> </q-table
-    >/>
-    <CrearProveedor
-      :dialogVisible="dialogVisible"
-      @update:dialogVisible="updateDialogVisible"
-    />
+      </template>
+    </q-table>
+
+    <Suspense>
+      <CrearProveedor
+        :dialogVisible="dialogVisible"
+        @update:dialogVisible="updateDialogVisible"
+      />
+    </Suspense>
   </div>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { api } from '../boot/axios';
+import { getProveedores, EliminarCol } from '../composable/proveedor.service';
 import { Proveedor } from 'src/models/proveedor.model';
 import CrearProveedor from '../components/crearProveedor.vue';
 
@@ -81,27 +81,76 @@ const updateDialogVisible = async (value: boolean) => {
   dialogVisible.value = value;
 };
 
-const columns = ref();
-
-const getProveedores = async () => {
-  const proveedores = await api.get<Proveedor[]>('/proveedores');
-  return proveedores.data;
+const deleteProveedor = (id: number) => {
+  EliminarCol(id)
+    .then((response) => {
+      console.log('proveedor eliminado', response.id);
+    })
+    .catch((error) => {
+      console.log('proveedor eliminado', error);
+    })
+    .finally(() => {
+      getProveed();
+    });
 };
+
+const columns = [
+  {
+    field: 'rut',
+    name: 'rut',
+    label: 'rut',
+  },
+  {
+    field: 'giro',
+    name: 'giro',
+    label: 'giro',
+  },
+  {
+    field: 'nombre',
+    name: 'nombre',
+    label: 'nombre',
+  },
+  {
+    field: 'telefono',
+    name: 'telefono',
+    label: 'telefono',
+  },
+  {
+    field: 'correo',
+    name: 'correo',
+    label: 'correo',
+  },
+  {
+    field: 'pagina_web',
+    name: 'pagina_web',
+    label: 'pagina web',
+  },
+  {
+    field: 'update',
+    name: 'update',
+    label: '',
+  },
+  {
+    field: 'delete',
+    name: 'delete',
+    label: '',
+  },
+];
 
 const proveedoresRow = ref<Proveedor[]>();
 
-onMounted(async () => {
+const getProveed = () => {
   getProveedores()
     .then((response) => {
       proveedoresRow.value = response;
       console.log(proveedoresRow.value);
     })
     .catch((error) => console.log('error al obtener los datos ', error));
+};
 
-  columns.value = Object.keys(proveedoresRow.value!).map((key) => ({
-    field: key,
-    name: key.toUpperCase(),
-    label: key,
-  }));
+onMounted(async () => {
+  getProveed();
+
+  console.log(columns);
 });
 </script>

@@ -18,9 +18,6 @@
     >
       <template #body="props">
         <q-tr :props="props">
-          <q-td key="id" :props="props">
-            {{ props.row.id }}
-          </q-td>
           <q-td key="rut" :props="props">
             {{ props.row.rut }}
           </q-td>
@@ -38,29 +35,36 @@
           </q-td>
 
           <q-td key="update" :props="props">
-            <q-btn round color="blue" label="Editar">
+            <q-btn size="md" color="blue" label="Editar">
               <q-icon name="edit" />
             </q-btn>
           </q-td>
           <q-td key="delete" :props="props">
-            <q-btn round color="danger" label="Eliminar ">
+            <q-btn
+              size="md"
+              color="red"
+              label="Eliminar "
+              @click="deleteClient(props.row.id)"
+            >
               <q-icon name="delete" />
             </q-btn>
           </q-td>
         </q-tr>
       </template>
     </q-table>
-    <CrearCliente
-      :dialogVisible="dialogVisible"
-      @update:dialogVisible="updateDialogVisible"
-    />
+    <Suspense>
+      <CrearCliente
+        :dialogVisible="dialogVisible"
+        @update:dialogVisible="updateDialogVisible"
+      />
+    </Suspense>
   </div>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { Cliente, ClienteUpdate } from '../models/cliente.model';
-import { api } from '../boot/axios';
+import { Cliente } from '../models/cliente.model';
+import { eliminarCliente, getClientes } from '../composable/clientes.service';
 import CrearCliente from '../components/CrearCliente.vue';
 
 const dialogVisible = ref<boolean>(false);
@@ -73,42 +77,71 @@ const updateDialogVisible = async (value: boolean) => {
   dialogVisible.value = value;
 };
 
+const deleteClient = (id: number) => {
+  eliminarCliente(id)
+    .then((response) => {
+      console.log('cliente eliminado ', response.id);
+    })
+    .catch((error) => {
+      console.log('cliente eliminado', error);
+    })
+    .finally(() => {
+      getClis();
+    });
+};
+
+// TODO: definir lo que quiero ver en la tabla con columns
 const columns = [
   {
+    field: 'rut',
+    name: 'rut',
+    label: 'rut',
+  },
+  {
+    field: 'nombre',
+    name: 'nombre',
+    label: 'nombre',
+  },
+  {
+    field: 'apellido',
+    name: 'apellido',
+    label: 'apellido',
+  },
+  {
+    field: 'correo',
+    name: 'correo',
+    label: 'correo',
+  },
+  {
+    field: 'celular',
+    name: 'celular',
+    label: 'celular',
+  },
+  {
     field: 'update',
-    name: 'Actualizar',
-    label: 'update',
+    name: 'update',
+    label: '',
   },
   {
     field: 'delete',
-    name: 'Delete',
-    label: 'delete',
+    name: 'delete',
+    label: '',
   },
 ];
 
-const EditarCol = async (id: number, dato: ClienteUpdate) => {
-  const clientes = await api.put<Cliente[]>(`/clientes/${id}`, dato);
-  return clientes.data;
-};
-const EliminarCol = async (id: number) => {
-  const clientes = await api.delete<Cliente[]>(`/clientes/${id}`);
-  return clientes.data;
-};
-
-//trae la lista de clientes del backend
-const getClientes = async () => {
-  const clientes = await api.get<Cliente[]>('/clientes');
-  return clientes.data;
-};
 const clientesRow = ref<Cliente[]>();
 
-onMounted(async () => {
+const getClis = () => {
   getClientes()
     .then((response) => {
       clientesRow.value = response;
       console.log(clientesRow.value);
     })
     .catch((error) => console.log('error al obtener datos ', error));
+};
+
+onMounted(async () => {
+  getClis();
 
   console.log('no Veo los botones');
   // columns.value.push({

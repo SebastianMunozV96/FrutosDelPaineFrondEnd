@@ -46,6 +46,38 @@
             mask="(+56) 9 ########"
             :rules="[(val) => !!val || 'Ingrese un numero de Celular']"
           />
+
+          <div class="text-center text-h5 q-pb-md">Direccion del cliente</div>
+
+          <q-input
+            v-model="calle"
+            label="Ingrese la calle"
+            mask="SSSSSSSSSSSSSSSSSSSSSSSSSSS"
+            unmasked-value
+            :rules="[(val) => !!val || 'Ingrese un calle']"
+          />
+
+          <q-input
+            v-model="numero_calle"
+            label="Ingrese numero de calle"
+            mask="NNNNNN"
+            unmasked-value
+            :rules="[(val) => !!val || 'Ingrese un numero calle']"
+          />
+
+          <q-input
+            v-model="numero_departamento"
+            label="Ingrese numero de departamento"
+            mask="NNNNNN"
+            unmasked-value
+            :rules="[(val) => !!val || 'Ingrese un numero departamento']"
+          />
+
+          <q-select
+            :options="optionComunas"
+            v-model="comunasSelected"
+            label="Comunas"
+          ></q-select>
         </q-form>
       </q-card-section>
       <q-card-actions align="right">
@@ -62,43 +94,90 @@
 </template>
 
 <script setup lang="ts">
-import { api } from 'src/boot/axios';
-import { ClienteInsert } from '../models/cliente.model';
-import { ref, toRefs, defineEmits } from 'vue';
+import { ref, toRefs, defineEmits, onMounted } from 'vue';
+import {
+  createDireccion,
+  createDireccionCliente,
+  getComunas,
+} from '../composable/direcciones.service';
+import { createCliente } from 'src/composable/clientes.service';
 
 const props = defineProps<{ dialogVisible: boolean }>();
 const { dialogVisible } = toRefs(props);
 const emits = defineEmits(['update:dialogVisible']);
-
-const showDialog = ref<boolean>(false);
 
 const rut = ref();
 const nombre = ref();
 const apellido = ref();
 const correo = ref();
 const celular = ref();
-const Direccion_id = ref();
+
+// TODO: variables reactivas , optionsComunas, comunaSelected, direccionesid
+const optionComunas = ref();
+const comunasSelected = ref();
+
+//-----------Val de direccion--//
+
+const calle = ref();
+const numero_calle = ref();
+const numero_departamento = ref();
+const idComuna = comunasSelected.value;
+
+onMounted(async () => {
+  getComunas()
+    .then((response) => {
+      optionComunas.value = response;
+      console.log(optionComunas);
+    })
+    .catch((error) => console.log('error al obtener Comunas', error));
+});
 
 const procesarFormulario = () => {
+  //insertCliente(clienteForm)
+  // TODO: obtener listado de comunas comunas en onMount y asignarlas al
+  // TODO: primero crear la direccion
+  //   {
+  //     calle: string;
+  //     numero_calle: number;
+  //     numero_departamento: number | null;
+  //     Comunas_id: number;
+  // }
+  // const idDireccion=  insertDireccion(direccionDato)
+
+  const direccionForm = {
+    calle: calle.value,
+    numero_calle: numero_calle.value,
+    numero_departamento: numero_departamento.value,
+    comuna_id: idComuna,
+  };
+  createDireccion(direccionForm)
+    .then((response) => (idDireccion.value = response.data.id))
+    .catch((error) => console.log(error));
+  const idDireccion = ref();
+
   const clienteForm = {
     rut: rut.value,
     nombre: nombre.value,
     apellido: apellido.value,
     correo: correo.value,
     celular: celular.value,
-
-    // direcciona
-    // y lo demas
+    direccion_id: idDireccion.value,
   };
-  //insertCliente(clienteForm)
-  insertCliente(clienteForm);
-};
 
-const insertCliente = (cliente: ClienteInsert) => {
-  api
-    .post('/clientes', cliente)
-    .then((response) => console.log('respuesta de servidor post ', response))
-    .catch((error) => console.log('error en respuesta de servidor ', error));
+
+  const idCliente = ref<number>()
+  createCliente(clienteForm)
+    .then((response) => {
+      idCliente.value = response.id
+      console.log('cliente insertado : ', response);
+    })
+    .catch((error) => {
+      console.log('Error al insertar cliente: ', error);
+    });
+    // TODO: insertar idDireccion en DIrecciones_de_clientes <- wear al leo
+  createDireccionCliente({ Clientes_id: idCliente.value!, Direcciones_id: idDireccion.value!})
+  .then((response) => console.log('direccion de cliente insertada ', response.data))
+  .catch((error) => console.log('error al insertar direcciones de clientes ', error))
   closeDialog();
 };
 
