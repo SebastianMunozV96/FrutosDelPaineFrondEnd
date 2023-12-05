@@ -12,33 +12,35 @@
 
           <q-input
             class="q-pb-md"
-            v-model="descripcion"
-            label="Ingrese una descripcion"
-            mask="SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS"
+            v-model.string="descripcion"
+            label="Ingrese descripcion"
             :rules="[(val) => !!val || 'Este campo es obligatorio']"
           />
           <q-input
-            v-model="peso_gramos"
+            type="number"
+            v-model.number="peso_gramos"
             label="Ingrese peso en gramos"
-            mask="###############"
+            mask="#############"
             :rules="[(val) => !!val || 'Este campo es obligatorio']"
           />
 
           <q-input
-            v-model="precio_neto"
+            type="number"
+            v-model.number="precio_neto"
             label="Ingrese precio"
             mask="#######"
             :rules="[(val) => !!val || 'Este campo es obligatorio']"
           />
 
           <q-input
-            v-model="stock"
+            type="number"
+            v-model.number="stock"
             label="Ingrese stock"
             mask="###"
             :rules="[(val) => !!val || 'Este campo es obligatorio']"
           />
           <q-input
-            v-model="cod_barra"
+            v-model.string="cod_barra"
             label="Ingrese codigo de barra"
             mask="NNNNNNNNNNNNNN"
             :rules="[(val) => !!val || 'Este campo es obligatorio']"
@@ -50,7 +52,7 @@
           color="secondary"
           type="submit"
           label="crear"
-          @submi="procesarFormulario"
+          @click="procesarFormulario"
         />
         <q-btn color="negative" label="Cancel" @click="closeDialog" />
       </q-card-actions>
@@ -62,7 +64,7 @@
 import { ref, toRefs, defineEmits, onMounted } from 'vue';
 import { api } from 'src/boot/axios';
 import { getCategorias } from '../composable/producto.service';
-import { CrearProducto, Producto } from '../models/producto.model';
+import { CrearProducto } from '../models/producto.model';
 
 const props = defineProps<{ dialogVisible: boolean }>();
 const { dialogVisible } = toRefs(props);
@@ -70,27 +72,32 @@ const emits = defineEmits(['update:dialogVisible']);
 
 //--------Categoria-------/
 const optionCategoria = ref();
-const categoriaSelected = ref<number>();
+const categoriaSelected = ref();
+//--------------------------------//
 
-const descripcion = ref<string>('');
-const peso_gramos = ref<number>(0);
-const precio_neto = ref<number>(0);
-const stock = ref<number>(0);
-const cod_barra = ref<string>('');
-const idCategoria = ref<number>(0);
+const descripcion = ref<string>();
+const peso_gramos = ref<number>();
+const precio_neto = ref<number>();
+const stock = ref<number>();
+const cod_barra = ref<string>();
+const idCategoria = ref<number>();
 
-onMounted(async () => {
-  getCategorias()
-    .then((response) => {
-      optionCategoria.value = response;
-      console.log(optionCategoria);
-    })
-    .catch((error) => console.log('error al obtener categorias', error));
-});
+try {
+  onMounted(async () => {
+    getCategorias()
+      .then((response) => {
+        optionCategoria.value = response;
+        console.log(optionCategoria);
+      })
+      .catch((error) => console.log('error al obtener categorias', error));
+  });
+} catch (error) {
+  console.log('error al obtener Categoria', error);
+}
 
 const procesarFormulario = () => {
-  idCategoria.value = categoriaSelected.value!;
-  const productoForm: CrearProducto = {
+  idCategoria.value = categoriaSelected.value;
+  const productoForm = {
     descripcion: descripcion.value,
     peso_gramos: peso_gramos.value,
     precio_neto: precio_neto.value,
@@ -98,14 +105,14 @@ const procesarFormulario = () => {
     cod_barras: cod_barra.value,
     Categorias_id: idCategoria.value,
   };
-  insertProducto(productoForm);
-};
+  const InsertProducto = (producto: CrearProducto) => {
+    api
+      .post('/productos', producto)
+      .then((response) => console.log('respuesta del servidor post', response))
+      .catch((error) => console.log('error en resuesta del servidor', error));
+  };
 
-const insertProducto = (producto: CrearProducto) => {
-  api
-    .post('/productos', producto)
-    .then((response) => console.log('respuesta del servidor post', response))
-    .catch((error) => console.log('error en la respuesta del servidor', error));
+  closeDialog();
 };
 
 const closeDialog = () => {

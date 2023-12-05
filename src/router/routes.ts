@@ -23,7 +23,6 @@ const routes: RouteRecordRaw[] = [
         //     component: () => import('../pages/crearPedidoPages.vue'),
         //   },
         // ],
-
       },
       {
         path: '/productos',
@@ -42,18 +41,18 @@ const routes: RouteRecordRaw[] = [
       },
     ],
   },
+
   {
-    path: '/login',
+    path: 'login',
     name: 'login',
     component: () => import('../layouts/loginLayout.vue'),
     children: [
       {
-        path: '',
-        name: 'loginPage',
+        path: '/login-page',
+        name: 'login-page',
         component: () => import('pages/LoginPage.vue'),
       },
-    ]
-
+    ],
   },
 
   // Always leave this as last one,

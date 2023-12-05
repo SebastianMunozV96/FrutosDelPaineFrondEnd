@@ -150,6 +150,7 @@ const procesarFormulario = () => {
     numero_departamento: numero_departamento.value,
     comuna_id: idComuna,
   };
+
   createDireccion(direccionForm)
     .then((response) => (idDireccion.value = response.data.id))
     .catch((error) => console.log(error));
@@ -164,20 +165,26 @@ const procesarFormulario = () => {
     direccion_id: idDireccion.value,
   };
 
-
-  const idCliente = ref<number>()
+  const idCliente = ref<number>();
   createCliente(clienteForm)
     .then((response) => {
-      idCliente.value = response.id
+      idCliente.value = response.id;
       console.log('cliente insertado : ', response);
     })
     .catch((error) => {
       console.log('Error al insertar cliente: ', error);
     });
-    // TODO: insertar idDireccion en DIrecciones_de_clientes <- wear al leo
-  createDireccionCliente({ Clientes_id: idCliente.value!, Direcciones_id: idDireccion.value!})
-  .then((response) => console.log('direccion de cliente insertada ', response.data))
-  .catch((error) => console.log('error al insertar direcciones de clientes ', error))
+  // TODO: insertar idDireccion en DIrecciones_de_clientes <- wear al leo
+  createDireccionCliente({
+    Clientes_id: idCliente.value!,
+    Direcciones_id: idDireccion.value!,
+  })
+    .then((response) =>
+      console.log('direccion de cliente insertada ', response.data)
+    )
+    .catch((error) =>
+      console.log('error al insertar direcciones de clientes ', error)
+    );
   closeDialog();
 };
 

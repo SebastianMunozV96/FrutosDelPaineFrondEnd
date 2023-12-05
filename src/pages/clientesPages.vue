@@ -62,9 +62,13 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
-import { Cliente } from '../models/cliente.model';
-import { eliminarCliente, getClientes } from '../composable/clientes.service';
+import { onMounted, ref, onUpdated } from 'vue';
+import { Cliente, ClienteUpdate } from '../models/cliente.model';
+import {
+  EditarCol,
+  eliminarCliente,
+  getClientes,
+} from '../composable/clientes.service';
 import CrearCliente from '../components/CrearCliente.vue';
 
 const dialogVisible = ref<boolean>(false);
@@ -75,6 +79,17 @@ const openDialog = () => {
 
 const updateDialogVisible = async (value: boolean) => {
   dialogVisible.value = value;
+};
+
+const clientesRow = ref<Cliente[]>();
+
+const getClis = () => {
+  getClientes()
+    .then((response) => {
+      clientesRow.value = response;
+      console.log(clientesRow.value);
+    })
+    .catch((error) => console.log('error al obtener datos ', error));
 };
 
 const deleteClient = (id: number) => {
@@ -89,6 +104,23 @@ const deleteClient = (id: number) => {
       getClis();
     });
 };
+
+const updateClient = (id: number, dato: ClienteUpdate) => {
+  EditarCol(id, dato)
+    .then((response) => {
+      console.log('cliente editado', response);
+    })
+    .catch((error) => {
+      console.log('cliente editado', error);
+    })
+    .finally(() => {
+      getClis();
+    });
+};
+
+onUpdated(async () => {
+  updateClient;
+});
 
 // TODO: definir lo que quiero ver en la tabla con columns
 const columns = [
@@ -128,17 +160,6 @@ const columns = [
     label: '',
   },
 ];
-
-const clientesRow = ref<Cliente[]>();
-
-const getClis = () => {
-  getClientes()
-    .then((response) => {
-      clientesRow.value = response;
-      console.log(clientesRow.value);
-    })
-    .catch((error) => console.log('error al obtener datos ', error));
-};
 
 onMounted(async () => {
   getClis();

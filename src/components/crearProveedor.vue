@@ -77,8 +77,6 @@ const props = defineProps<{ dialogVisible: boolean }>();
 const { dialogVisible } = toRefs(props);
 const emits = defineEmits(['update:dialogVisible']);
 
-const showDialog = ref<boolean>(false);
-
 const rut = ref();
 const giro = ref();
 const nombre = ref();
@@ -97,16 +95,17 @@ const procesarFormulario = () => {
     pagina_web: pagina_web.value,
     Direccion_id: Direccion_id.value,
   };
+
+  const InsertProveedor = (proveedor: ProveedorInsert) => {
+    api
+      .post('/proveedores', proveedor)
+      .then((response) => console.log('respuesta del servidor post', response))
+      .catch((error) => console.log('error en respuesta del servidor', error));
+  };
+
   InsertProveedor(proveedorForm);
 
-};
-
-const InsertProveedor = (proveedor: ProveedorInsert) => {
-  api
-    .post('/proveedores', proveedor)
-    .then((response) => console.log('respuesta del servidor post', response))
-    .catch((error) => console.log('error en respuesta del servidor', error));
-    closeDialog();
+  closeDialog();
 };
 
 const closeDialog = () => {

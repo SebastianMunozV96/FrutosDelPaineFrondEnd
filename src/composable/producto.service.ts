@@ -11,6 +11,8 @@ export const getProductos = async () => {
   return productos.data;
 };
 
+
+
 export const EditCol = async (id: number, dato: ProductoUpdate) => {
   const producto = await api.put<Producto>(`/productos/${id}`, dato);
   return producto.data;
@@ -21,8 +23,8 @@ export const EliminarCol = async (id: number) => {
   return producto.data;
 };
 
-export const CreateProducto = async (producto: CrearProducto) => {
-  const productoCreate = await api.post<CrearProducto>('/productos', producto);
+export const ProductoInsert = async (producto: CrearProducto) => {
+  const productoCreate = await api.post<Producto>('/productos', producto);
   return productoCreate.data;
 };
 
