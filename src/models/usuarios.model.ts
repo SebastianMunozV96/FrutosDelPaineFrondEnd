@@ -24,4 +24,4 @@ export type tipoUsuarioCreate = Omit<TipoUsuario, 'id'>;
 
 export type tipoUsuarioUpdate = TipoUsuario;
 
-export type TipoUsuarioDelete = TipoUsuario;
+export type tipoUsuarioDelete = TipoUsuario;

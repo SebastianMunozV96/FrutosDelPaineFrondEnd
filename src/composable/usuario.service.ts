@@ -3,6 +3,9 @@ import {
   Usuario,
   UsuarioInsert,
   UsuarioUpdate,
+  TipoUsuario,
+  tipoUsuarioCreate,
+  tipoUsuarioUpdate,
 } from 'src/models/usuarios.model';
 
 export const getUsuarios = async () => {
@@ -28,4 +31,33 @@ export const editarUsuario = async (id: number, dato: UsuarioUpdate) => {
 export const eliminarUsuario = async (id: number) => {
   const result = await api.delete<{ id: number }>(`/usuarios/${id}`);
   return result.data;
+};
+
+//-------------------------------------------------------//
+//------- Services de Tipo de Usuario -------------------------------------//
+
+export const getTipoUsusario = async () => {
+  const tipoUsuarios = await api.get<TipoUsuario[]>('/tipo-usuario');
+  return tipoUsuarios.data;
+};
+
+export const updateTipoUsuario = async (
+  id: number,
+  dato: tipoUsuarioUpdate
+) => {
+  const tipoUsario = await api.put<TipoUsuario[]>(`/tipo-usuario/${id}`, dato);
+  return tipoUsario.data;
+};
+
+export const deleteTipoUsuario = async (id: number) => {
+  const tipoUsuario = await api.delete<{ id: number }>(`/tipo-usuario/${id}`);
+  return tipoUsuario.data;
+};
+
+export const createTipoUsuario = async (tipoUsuario: tipoUsuarioCreate) => {
+  const tipoUsuarios = await api.post<TipoUsuario>(
+    '/tipo-usuario',
+    tipoUsuario
+  );
+  return tipoUsuarios.data;
 };

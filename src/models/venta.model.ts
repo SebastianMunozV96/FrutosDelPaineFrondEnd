@@ -9,11 +9,11 @@ export type Venta = {
   Estado_Pago_id: number;
 };
 
-export type ventaCreate = Omit<Venta, 'id'>;
+export type VentaCreate = Omit<Venta, 'id'>;
 
-export type ventaUpdate = Venta;
+export type VentaUpdate = Venta;
 
-export type ventaDelete = Venta;
+export type VentaDelete = Venta;
 
 //------------------------------------------------------------//
 //-----------Tabla Estado_Pago--------------------------------///
@@ -23,11 +23,11 @@ export type Estadopago = {
   estado: string;
 };
 
-export type estadoPagoCreate = Omit<Estadopago, 'id'>;
+export type EstadoPagoCreate = Omit<Estadopago, 'id'>;
 
-export type estadoPagoUpdate = Estadopago;
+export type EstadoPagoUpdate = Estadopago;
 
-export type estadoPagoDelete = Estadopago;
+export type EstadoPagoDelete = Estadopago;
 
 //------------------------------------------------------//
 //-----------   Tabla Detalle Pago   ------------------//
@@ -39,11 +39,11 @@ export type DetallePago = {
   Metodo_Pago_id: number;
 };
 
-export type detallePagoCreate = Omit<DetallePago, 'id'>;
+export type DetallePagoCreate = Omit<DetallePago, 'id'>;
 
-export type detallePagoUpdate = DetallePago;
+export type DetallePagoUpdate = DetallePago;
 
-export type detallePagoDelete = DetallePago;
+export type DetallePagoDelete = DetallePago;
 
 //------------------------------------------------------//
 //-----------   Tabla Detalle Venta   ------------------//
@@ -56,8 +56,8 @@ export type DetalleVenta = {
   Venta_id: number;
 };
 
-export type detalleVentaCreate = DetalleVenta;
+export type CreatedetalleVenta = DetalleVenta;
 
-export type detalleVentaUpdate = DetalleVenta;
+export type UpdatedetalleVenta = DetalleVenta;
 
-export type detalleVentaDelete = DetalleVenta;
+export type DeletedetalleVenta = DetalleVenta;

@@ -10,7 +10,7 @@ export const EditarCol = async (id: number, dato: ClienteUpdate) => {
   return clientes.data;
 };
 export const eliminarCliente = async (id: number) => {
-  const clientes = await api.delete<{id: number}>(`/clientes/${id}`);
+  const clientes = await api.delete<{ id: number }>(`/clientes/${id}`);
   return clientes.data;
 };
 
