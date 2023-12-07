@@ -52,7 +52,7 @@
     </q-table>
 
     <Suspense>
-      <CrearUsuario
+      <CrearColaborador
         :dialogVisible="dialogVisible"
         @updateDialogVisible="updateDialogVisible"
       />
@@ -67,6 +67,7 @@ import {
   getColaboradores,
   EliminarCol,
 } from '../composable/colaborador.service';
+import CrearColaborador from '../components/CrearColaborador.vue';
 
 const dialogVisible = ref<boolean>(false);
 const openDialog = () => {

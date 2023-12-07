@@ -122,7 +122,10 @@ onMounted(async () => {
 });
 
 const procesarFormulario = () => {
-  idComunas.value = comunasSelected.value!;
+
+
+  
+  idComunas.value = comunasSelected.value;
   const direccionForm: DireccionesCreate = {
     calle: calle.value,
     numero_calle: numero_calle.value,
@@ -153,20 +156,8 @@ const procesarFormulario = () => {
       console.log('Error al insertar colaborador : ', error);
     });
 
-
-
-    
+    closeDialog ();
 };
-
-
-
-
-
-
-
-
-
-
 
 const closeDialog = () => {
   emits('update:dialogVisible', false);

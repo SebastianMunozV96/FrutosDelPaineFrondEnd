@@ -9,13 +9,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUpdated } from 'vue';
+import { ref, onMounted} from 'vue';
 import { getUsuariosID } from '../composable/usuario.service';
 
 const username = ref();
 const password = ref();
 
 const login = () => {
+
+
+  
   const getUser = (id: number) => {
     getUsuariosID(id)
       .then((response) => {

@@ -42,19 +42,6 @@ const routes: RouteRecordRaw[] = [
     ],
   },
 
-  {
-    path: 'login',
-    name: 'login',
-    component: () => import('../layouts/loginLayout.vue'),
-    children: [
-      {
-        path: '/login-page',
-        name: 'login-page',
-        component: () => import('pages/LoginPage.vue'),
-      },
-    ],
-  },
-
   // Always leave this as last one,
   // but you can also remove it
   {
