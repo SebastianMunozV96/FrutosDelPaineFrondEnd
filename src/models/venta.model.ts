@@ -30,22 +30,6 @@ export type EstadoPagoUpdate = Estadopago;
 export type EstadoPagoDelete = Estadopago;
 
 //------------------------------------------------------//
-//-----------   Tabla Detalle Pago   ------------------//
-
-export type DetallePago = {
-  id: number;
-  monto_pagado: string;
-  fecha: string;
-  Metodo_Pago_id: number;
-};
-
-export type DetallePagoCreate = Omit<DetallePago, 'id'>;
-
-export type DetallePagoUpdate = DetallePago;
-
-export type DetallePagoDelete = DetallePago;
-
-//------------------------------------------------------//
 //-----------   Tabla Detalle Venta   ------------------//
 
 export type DetalleVenta = {

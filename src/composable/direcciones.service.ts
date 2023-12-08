@@ -7,6 +7,7 @@ import {
   Provincias,
   Regiones,
   DireccionesClienteResult,
+  DireccionesColaboradorResult,
 } from 'src/models/Direcciones.model';
 
 export const getDirecciones = async () => {
@@ -24,10 +25,25 @@ export const getComunas = async () => {
   return comunas.data;
 };
 
-export const createDireccionCliente = async (dato: DireccionesClienteResult) => {
-  const direccionDeCliente = await api.post<DireccionesClienteResult>('/direcciones/direcciones-de-clientes', dato)
-  return direccionDeCliente
-}
+export const createDireccionCliente = async (
+  dato: DireccionesClienteResult
+) => {
+  const direccionDeCliente = await api.post<DireccionesClienteResult>(
+    '/direcciones/direcciones-de-clientes',
+    dato
+  );
+  return direccionDeCliente;
+};
+
+export const createDireccionesColaborador = async (
+  dato: DireccionesColaboradorResult
+) => {
+  const direccionDeColaborador = await api.post<DireccionesColaboradorResult>(
+    '/direcciones/direcciones-de-colaboradores',
+    dato
+  );
+  return direccionDeColaborador;
+};
 
 export const getProvinciasID = async (id: number) => {
   const idProvincia = await api.get<Provincias[]>(

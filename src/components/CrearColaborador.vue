@@ -89,7 +89,11 @@
 
 <script setup lang="ts">
 import { ref, toRefs, defineEmits, onMounted } from 'vue';
-import { createDireccion, getComunas } from '../composable/direcciones.service';
+import {
+  createDireccion,
+  createDireccionesColaborador,
+  getComunas,
+} from '../composable/direcciones.service';
 import { createColaborador } from '../composable/colaborador.service';
 import { DireccionesCreate } from '../models/Direcciones.model';
 
@@ -122,9 +126,6 @@ onMounted(async () => {
 });
 
 const procesarFormulario = () => {
-
-
-  
   idComunas.value = comunasSelected.value;
   const direccionForm: DireccionesCreate = {
     calle: calle.value,
@@ -155,8 +156,18 @@ const procesarFormulario = () => {
     .catch((error) => {
       console.log('Error al insertar colaborador : ', error);
     });
+  createDireccionesColaborador({
+    Colaboradores_id: idColabor.value!,
+    Direcciones_id: idDireccion.value!,
+  })
+    .then((response) =>
+      console.log('direccion de colaborador insertada', response.data)
+    )
+    .catch((error) =>
+      console.log('error al insertar la direccion del colaborador', error)
+    );
 
-    closeDialog ();
+  closeDialog();
 };
 
 const closeDialog = () => {

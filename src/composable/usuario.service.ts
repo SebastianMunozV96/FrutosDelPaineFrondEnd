@@ -33,7 +33,7 @@ export const eliminarUsuario = async (id: number) => {
   return result.data;
 };
 
-//-------------------------------------------------------//
+//------------------------------------------------------------------------//
 //------- Services de Tipo de Usuario -------------------------------------//
 
 export const getTipoUsusario = async () => {

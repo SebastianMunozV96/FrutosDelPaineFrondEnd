@@ -7,9 +7,6 @@ import {
   Estadopago,
   EstadoPagoCreate,
   EstadoPagoUpdate,
-  DetallePago,
-  DetallePagoCreate,
-  DetallePagoUpdate,
   DetalleVenta,
   CreatedetalleVenta,
   UpdatedetalleVenta,
@@ -58,35 +55,6 @@ export const updateEstadoPago = async (id: number, dato: EstadoPagoUpdate) => {
 export const deleteEstadoPago = async (id: number) => {
   const estadoPagos = await api.delete<{ id: number }>(`/estado-pago/${id}`);
   return estadoPagos.data;
-};
-
-//--------------------------------------------///
-//---------- Service  Detalle Pago----------------------------------///
-
-export const getDetallePago = async () => {
-  const detallePagos = await api.get<DetallePago[]>('/detalle-pago');
-  return detallePagos.data;
-};
-
-export const createDetallePago = async (detallePago: DetallePagoCreate) => {
-  const detallePagos = await api.post<DetallePago>(
-    '/detalle-pago',
-    detallePago
-  );
-  return detallePagos.data;
-};
-
-export const updateDetallePago = async (
-  id: number,
-  dato: DetallePagoUpdate
-) => {
-  const detallePago = await api.put<DetallePago[]>(`/detalle-pago/${id}`, dato);
-  return detallePago.data;
-};
-
-export const deleteDetallPAgo = async (id: number) => {
-  const result = await api.delete<{ id: number }>(`/detalle-pago/${id}`);
-  return result.data;
 };
 
 //-----------------------------------------------///
