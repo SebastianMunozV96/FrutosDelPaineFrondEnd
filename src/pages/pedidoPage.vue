@@ -23,7 +23,11 @@ const getVentas = async () => {
 const ventasRow = ref<Venta[]>([]);
 const celularrearPedido = ref(false);
 
+//productos
+const productos = ref<any[]>([]);
+const productosSeleccionados = ref<any[]>([]);
 
+const metodoPago = ref();
 
 onMounted(async () => {
   ventasRow.value = await getVentas();
@@ -35,27 +39,46 @@ onMounted(async () => {
 });
 </script>
 
-
 <template>
   <div class="q-pa-md">
-    <q-btn
-      unelevated
-      color="primary"
-      label="Crear Pedido"
-
-    >
-    </q-btn>
-    <q-table
-      style="height: 400px"
-      flat
-      bordered
-      title="Tabla de Pedidos"
-      :rows="ventasRow"
-      :columns="columns"
-      virtual-scroll
-      no-data-label="No se encontro ningun Pedido"
-    />
+    <q-btn unelevated color="primary" label="Crear Pedido"> </q-btn>
+    <div class="row">
+      <q-table
+        class="col"
+        flat
+        bordered
+        title="Productos para venta"
+        :rows="productos"
+        :columns="columns"
+        row-key="name"
+        selection="multiple"
+        v-model:selected="productosSeleccionados"
+      />
+      <div class="col ">
+        <q-card>
+          <q-card-section>
+            <div class="text-h6">Cliente</div>
+          </q-card-section>
+        </q-card>
+        <q-table
+          title="Productos de cliente"
+          :rows="productosSeleccionados"
+          :columns="columns"
+        />
+        <!-- metodos de pago -->
+        <q-card>
+        <q-card-section>
+          <div class="text-h6">Metodos de pago</div>
+        </q-card-section>
+          <q-card-section>
+            <div class="q-gutter-sm">
+            <!-- v-for de metodos de pago -->
+              <q-radio dense v-model="metodoPago" val="line" label="Line" />
+            </div>
+          </q-card-section>
+        </q-card>
+        <q-btn color="blue" label="Pagar"></q-btn>
+      </div>
+    </div>
   </div>
 </template>
-
-
