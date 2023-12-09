@@ -1,25 +1,3 @@
-<template>
-  <div class="q-pa-md">
-    <q-btn
-      unelevated
-      color="primary"
-      label="Crear Pedido"
-      
-    >
-    </q-btn>
-    <q-table
-      style="height: 400px"
-      flat
-      bordered
-      title="Tabla de Pedidos"
-      :rows="ventasRow"
-      :columns="columns"
-      virtual-scroll
-      no-data-label="No se encontro ningun Pedido"
-    />
-  </div>
-</template>
-
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { api } from '../boot/axios';
@@ -56,3 +34,28 @@ onMounted(async () => {
   }));
 });
 </script>
+
+
+<template>
+  <div class="q-pa-md">
+    <q-btn
+      unelevated
+      color="primary"
+      label="Crear Pedido"
+
+    >
+    </q-btn>
+    <q-table
+      style="height: 400px"
+      flat
+      bordered
+      title="Tabla de Pedidos"
+      :rows="ventasRow"
+      :columns="columns"
+      virtual-scroll
+      no-data-label="No se encontro ningun Pedido"
+    />
+  </div>
+</template>
+
+

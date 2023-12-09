@@ -19,7 +19,14 @@ const serverURL =
   process.env.NODE_ENV == 'production'
     ? 'https://frutosdelpaine.onrender.com/api/v1/'
     : 'http://localhost:5000/api/v1';
+
+const authUrl =
+  process.env.NODE_ENV == 'production'
+    ? 'https://frutosdelpaine.onrender.com/api/v1/auth/login'
+    : 'http://localhost:5000/api/v1/auth/login';
+
 const api = axios.create({ baseURL: serverURL });
+const authApi = axios.create({ baseURL: authUrl})
 
 export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
@@ -33,4 +40,4 @@ export default boot(({ app }) => {
   //       so you can easily perform requests against your app's API
 });
 
-export { api };
+export { api, authApi };
