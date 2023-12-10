@@ -1,31 +1,58 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { api } from '../boot/axios';
-import { getProductos } from '../composable/producto.service';
 import { geVenta } from '../composable/venta.service';
 import { Venta } from '../models/venta.model';
 
-const columns = ref();
+import { useProductosStore } from 'src/stores/productos';
+import { storeToRefs } from 'pinia';
+
+const storeProductos = useProductosStore()
+const { productos } = storeToRefs(storeProductos)
 
 const ventasRow = ref<Venta[]>([]);
 const celularrearPedido = ref(false);
 
 //productos
-const productos = ref<any[]>([]);
+
 const productosSeleccionados = ref<any[]>([]);
+
+const descripcion = ref();
+const peso_gramos = ref();
+const stock = ref();
+const idCategoria = ref();
+
+
+const columns=ref ();
+
+
+const columnsProd = [
+  {
+    field: 'descripcion',
+    name: 'descripcion',
+    label: 'descripcion',
+  },
+  {
+    field: 'peso_gramos ',
+    name: 'peso_gramos ',
+    label: 'peso_gramos ',
+  },
+  {
+    field: 'peso_gramos ',
+    name: 'peso_gramos ',
+    label: 'peso_gramos ',
+  },
+  {
+    field: 'peso_gramos ',
+    name: 'peso_gramos ',
+    label: 'peso_gramos ',
+  },
+];
 
 const metodoPago = ref();
 
-const productoGet = async () => {
-  getProductos().then((Response) => {
-    productos.value = Response;
-    console.log('lista de productos', productos.value);
-  })
-  .catch((error)=> console.log('error al obtener productos',error) )
-};
 
 onMounted(async () => {
-  productoGet();
+  storeProductos.getProductos()
   ventasRow.value = await geVenta();
   columns.value = Object.keys(ventasRow.value).map((key) => ({
     field: key,
@@ -45,12 +72,29 @@ onMounted(async () => {
         bordered
         title="Productos para venta"
         :rows="productos"
-        :columns="columns"
+        :columns="columnsProd"
         no-data-label="No se encuentran los productos"
         row-key="name"
         selection="multiple"
         v-model:selected="productosSeleccionados"
-      />
+      >
+        <template #body="props">
+          <q-tr :props="props">
+            <q-td key="descripcion" :props="props">
+              {{ props.row.descripcion }}
+            </q-td>
+            <q-td key="peso_gramos" :props="props">
+              {{ props.row.peso_gramos }}
+            </q-td>
+            <q-td key="precio_neto" :props="props">
+              {{ props.row.precio_neto }}
+            </q-td>
+            <q-td key="stock" :props="props">
+              {{ props.row.stock }}
+            </q-td>
+          </q-tr>
+        </template>
+      </q-table>
 
       <div class="col">
         <q-card>
@@ -58,7 +102,8 @@ onMounted(async () => {
             <div class="text-h6">Cliente</div>
           </q-card-section>
         </q-card>
-        <q-table class=""
+        <q-table
+          class=""
           title="Productos de cliente"
           :rows="productosSeleccionados"
           :columns="columns"
