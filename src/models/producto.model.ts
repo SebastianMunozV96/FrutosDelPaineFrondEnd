@@ -8,6 +8,8 @@ export type Producto = {
   Categorias_id: number;
 };
 
+export type ProductoWithoutCategorias = Omit<Producto, 'Categorias_id'>
+
 export type CrearProducto = Omit<Producto, 'id'>;
 
 export type ProductoDelete = Producto;
