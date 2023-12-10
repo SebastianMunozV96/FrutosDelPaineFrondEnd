@@ -13,7 +13,7 @@ interface DataReturn {
 
 }
 
-export const useCounterStore = defineStore('auth', () => {
+export const useAuthStore = defineStore('auth', () => {
 
   // states
   const idToken = ref<string>('')
