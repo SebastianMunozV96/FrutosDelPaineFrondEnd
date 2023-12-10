@@ -15,7 +15,6 @@
       no-data-label="No se encontro ningun cliente"
       :rows="clientesRow"
       :columns="columns"
-     
     >
       <template #body="props">
         <q-tr :props="props">

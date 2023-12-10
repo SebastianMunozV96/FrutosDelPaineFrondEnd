@@ -2,11 +2,11 @@ export type Venta = {
   id: number;
   neto: number;
   iva: number;
-  total: number;
+  total: number | null;
   fecha: string;
-  Usuarios_id: number;
-  Clientes_id: number;
-  Estado_Pago_id: number;
+  Usuario_id: number | null;
+  Cliente_id: number | null;
+  Estado_PAgo_id: number | null;
 };
 
 export type VentaCreate = Omit<Venta, 'id'>;
