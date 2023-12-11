@@ -19,7 +19,7 @@ export const useCounterStore = defineStore('counter', () => {
   const regiones = ref<Regiones[]>([])
 
 
-
+  // direcciones
   const getDirecciones = async () => {
     const result = await api.get<Direcciones[]>('/direcciones');
     if (!result.data) console.log('getDirecciones error: ', result)
