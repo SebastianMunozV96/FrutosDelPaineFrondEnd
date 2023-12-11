@@ -6,8 +6,8 @@ import { Venta } from '../models/venta.model';
 import { useProductosStore } from 'src/stores/productos';
 import { storeToRefs } from 'pinia';
 
-const storeProductos = useProductosStore()
-const { productos } = storeToRefs(storeProductos)
+const storeProductos = useProductosStore();
+const { productos } = storeToRefs(storeProductos);
 
 const ventasRow = ref<Venta[]>([]);
 const celularrearPedido = ref(false);
@@ -21,9 +21,7 @@ const peso_gramos = ref();
 const stock = ref();
 const idCategoria = ref();
 
-
-const columns=ref ();
-
+const columns = ref();
 
 const columnsProd = [
   {
@@ -50,9 +48,8 @@ const columnsProd = [
 
 const metodoPago = ref();
 
-
 onMounted(async () => {
-  storeProductos.getProductos()
+  storeProductos.getProductos();
   ventasRow.value = await geVenta();
   columns.value = Object.keys(ventasRow.value).map((key) => ({
     field: key,
