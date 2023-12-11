@@ -6,6 +6,7 @@ export type Usuario = {
   Colaboradores_id: number;
 };
 
+
 export type UsuarioInsert = Omit<Usuario, 'id'>;
 
 export type UsuarioDelete = Usuario;

@@ -7,6 +7,8 @@ export type Colaborador = {
   direccion_id: number;
 };
 
+export type ColaboradorWhitoutDireccion = Omit<Colaborador, 'direccion_id'>;
+
 export type ColaboradorInsert = Omit<Colaborador, 'id'>;
 
 export type ColaboradorUpdate = Colaborador;
