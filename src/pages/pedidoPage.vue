@@ -10,16 +10,11 @@ const storeProductos = useProductosStore();
 const { productos } = storeToRefs(storeProductos);
 
 const ventasRow = ref<Venta[]>([]);
-const celularrearPedido = ref(false);
+const celularPedido = ref(false);
 
 //productos
 
 const productosSeleccionados = ref<any[]>([]);
-
-const descripcion = ref();
-const peso_gramos = ref();
-const stock = ref();
-const idCategoria = ref();
 
 const columns = ref();
 
@@ -30,19 +25,24 @@ const columnsProd = [
     label: 'descripcion',
   },
   {
-    field: 'peso_gramos ',
-    name: 'peso_gramos ',
-    label: 'peso_gramos ',
+    field: 'peso_gramos',
+    name: 'peso_gramos',
+    label: 'peso_gramos',
   },
   {
-    field: 'peso_gramos ',
-    name: 'peso_gramos ',
-    label: 'peso_gramos ',
+    field: 'precio_neto',
+    name: 'precio_neto',
+    label: 'precio_neto',
   },
   {
-    field: 'peso_gramos ',
-    name: 'peso_gramos ',
-    label: 'peso_gramos ',
+    field: 'stock ',
+    name: 'stock ',
+    label: 'stock ',
+  },
+  {
+    field: 'categoria',
+    name: 'categoria',
+    label: 'categoria',
   },
 ];
 
@@ -60,8 +60,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="q-pa-md">
-    <q-btn unelevated color="primary" label="Crear Pedido"> </q-btn>
+  <div class="q-pa-lg">
     <div class="row">
       <q-table
         class="col"
@@ -125,7 +124,7 @@ onMounted(async () => {
             </div>
           </q-card-section>
         </q-card>
-        <q-btn color="blue" label="Pagar"></q-btn>
+        <q-btn color="blue" label="Pagar"> </q-btn>
       </div>
     </div>
   </div>

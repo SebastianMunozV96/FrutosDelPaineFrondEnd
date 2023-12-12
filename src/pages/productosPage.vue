@@ -18,6 +18,8 @@
     >
       <template #body="props">
         <q-tr :props="props">
+
+
           <q-td key="descripcion" :props="props">
             {{ props.row.descripcion }}
           </q-td>

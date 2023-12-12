@@ -1,11 +1,7 @@
 import { ref, computed } from 'vue';
 import { api } from 'src/boot/axios';
 import { defineStore } from 'pinia';
-import {
-  Proveedor,
-  ProveedorInsert,
-  ProveedorUpdate,
-} from 'src/models/proveedor.model';
+import { Proveedor, ProveedorInsert } from 'src/models/proveedor.model';
 
 export const useProveedorStore = defineStore('counter', () => {
   const proveedores = ref<Proveedor[]>([]);

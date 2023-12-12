@@ -166,8 +166,6 @@ const procesarFormulario = () => {
     .catch((error) =>
       console.log('error al insertar la direccion del colaborador', error)
     );
-
-  closeDialog();
 };
 
 const closeDialog = () => {
