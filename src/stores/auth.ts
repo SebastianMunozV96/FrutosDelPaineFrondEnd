@@ -13,6 +13,12 @@ interface DataReturn {
 
 }
 
+interface Message {
+  ok: boolean,
+  message: any
+}
+
+
 export const useAuthStore = defineStore('auth', () => {
 
   // states
@@ -28,7 +34,6 @@ export const useAuthStore = defineStore('auth', () => {
   //actions
   async function signInUser(user: { correo: string, password: string }) {
     const { correo, password } = user;
-
     try {
       const { data } = await authApi.post<DataReturn>('/login', {
         correo,
@@ -46,7 +51,7 @@ export const useAuthStore = defineStore('auth', () => {
         username.value = usuario.correo;
         rol.value = usuario.rol;
         console.log('token ? : ', getToken.value !== null);
-        return { ok: true };
+        return { ok: true, message: 'ok' };
       }
     } catch (error) {
       console.log('signInUser error: ', error);
@@ -54,5 +59,37 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  return { idToken, username, rol, getToken, getUserName, getRol, signInUser }
+  async function checkAuthentication() {
+    const atoken = await getToken.value;
+    console.log('Stores Auth -> checkAuthentication() atoken: ', atoken !== null);
+    if (atoken) {
+      return { ok: true, message: 'Si hay Token' };
+    } else {
+      logout();
+      return { ok: false, message: 'No hay token' };
+    }
+  }
+
+  function logout() {
+    idToken.value = '';
+    username.value = '';
+    rol.value = '';
+    localStorage.removeItem('OToken');
+    localStorage.removeItem('username');
+    localStorage.removeItem('rol');
+
+    console.log('logout');
+  }
+
+  return {
+    idToken,
+    username,
+    rol,
+    getToken,
+    getUserName,
+    getRol,
+    signInUser,
+    checkAuthentication,
+    logout
+  }
 })

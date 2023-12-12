@@ -1,52 +1,78 @@
-<template>
-  <q-page>
-    <div class="bg-pa-mb bg-blue">
-      <q-parallax class="" src="../../public/img/inicioSesion.jpg">
-        <q-card
-          class="bg-grey-4 p-center absolute-center q-pa-md"
-          style="
-            background: radial-gradient(circle, #35ff3556 0%, #2c880177 100%);
-            max-width: 500px;
-            max-width: 500px;
-          "
-        >
-          <q-card-section class="columns">
-            <q-input
-              type="email"
-              v-model="username"
-              label="Usuario"
-              :rules="[
-                (val) => !!val || 'Ingrese un correo',
-                (val) => /.+@.+\..+/.test(val) || 'Correo no Valido',
-              ]"
-            />
+<script setup lang="ts">
+import { ref } from 'vue';
+import { useAuthStore } from 'src/stores/auth';
+import { useRouter } from 'vue-router';
+const authStore = useAuthStore();
 
-            <q-input
-              class="q-my-md"
-              v-model="password"
-              label="Contraseña"
-              type="password"
-              :rules="[(val) => !!val || 'Ingrese password']"
-            />
-            <div class="row justify-center">
-              <q-btn @click="login" color="secondary" label="Iniciar Sesión" />
-            </div>
-          </q-card-section>
-        </q-card>
-      </q-parallax>
-    </div>
+const router = useRouter();
+
+const username = ref<string>('');
+const password = ref<string>('');
+
+const loginForm = {
+  correo: username.value,
+  password: password.value,
+};
+
+const onSubmit = async () => {
+  const result = await authStore.signInUser(loginForm);
+  if (result!.ok) {
+    router.push({ name: 'main' });
+  } else {
+    alert('Error al ingresar datos');
+  }
+};
+</script>
+
+<template>
+  <q-page class="background-image">
+    <q-card class="bg-grey-4 p-center absolute-center q-pa-md">
+      <q-card-section class="column items-center">
+        <p class="text-h4 col">Inicio de sesion</p>
+        <p class="text-h5 col">Frutos del Paine</p>
+      </q-card-section>
+      <q-card-section class="columns">
+        <q-input
+          type="email"
+          v-model="username"
+          label="Correo Usuario"
+          :rules="[
+            (val) => !!val || 'Ingrese un correo',
+            (val) => /.+@.+\..+/.test(val) || 'Correo no Valido',
+          ]"
+        >
+          <template #before>
+            <q-icon name="mail" />
+          </template>
+        </q-input>
+
+        <q-input
+          class="q-my-md"
+          v-model="password"
+          label="Contraseña"
+          type="password"
+          :rules="[
+            (val) => !!val || 'Ingrese password',
+            (val) => val.length >= 8 || 'debe ser mayor o igual a 8 caracteres',
+          ]"
+        >
+          <template #before>
+            <q-icon name="key" />
+          </template>
+        </q-input>
+        <div class="row justify-center">
+          <q-btn @click="onSubmit" color="secondary" label="Iniciar Sesión" />
+        </div>
+      </q-card-section>
+    </q-card>
   </q-page>
 </template>
 
-<script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { getUsuariosID } from '../composable/usuario.service';
-
-const username = ref();
-const password = ref();
-
-const login = () => {
-  username: username.value;
-  passsword: password.value;
-};
-</script>
+<style>
+.background-image {
+  background-image: url('../../public/img/inicioSesion.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+</style>
