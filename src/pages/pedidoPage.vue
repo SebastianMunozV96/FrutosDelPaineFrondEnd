@@ -1,20 +1,22 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { geVenta } from '../composable/venta.service';
 import { Venta } from '../models/venta.model';
 
 import { useProductosStore } from 'src/stores/productos';
 import { storeToRefs } from 'pinia';
+import { ProductoWIthCategoria } from '../models/producto.model';
 
 const storeProductos = useProductosStore();
 const { productos } = storeToRefs(storeProductos);
 
 const ventasRow = ref<Venta[]>([]);
-const celularPedido = ref(false);
+// const celularPedido = ref(false);
 
 //productos
 
-const productosSeleccionados = ref<any[]>([]);
+const selected = ref<ProductoWIthCategoria[]>([]);
+const filter = ref();
 
 const columns = ref();
 
@@ -35,18 +37,24 @@ const columnsProd = [
     label: 'precio_neto',
   },
   {
-    field: 'stock ',
-    name: 'stock ',
-    label: 'stock ',
+    field: 'stock',
+    name: 'stock',
+    label: 'stock',
   },
   {
-    field: 'categoria',
+    field: (row: ProductoWIthCategoria) => row.Categorias.categoria,
     name: 'categoria',
     label: 'categoria',
   },
 ];
 
 const metodoPago = ref();
+const totalPagar = computed(() =>
+  selected.value.reduce((total, producto) => {
+    const subtotal = producto.precio_neto * producto.cantidad;
+    return total + subtotal;
+  }, 0)
+);
 
 onMounted(async () => {
   storeProductos.getProductos();
@@ -56,6 +64,11 @@ onMounted(async () => {
     name: key.toUpperCase(),
     label: key,
   }));
+});
+
+watch(selected, (newValue, oldValue) => {
+  console.log('productos seleccionados anteriores: ', oldValue);
+  console.log('productos seleccionados nuevos: ', newValue);
 });
 </script>
 
@@ -70,25 +83,23 @@ onMounted(async () => {
         :rows="productos"
         :columns="columnsProd"
         no-data-label="No se encuentran los productos"
-        row-key="name"
+        row-key="id"
+        :filter="filter"
         selection="multiple"
-        v-model:selected="productosSeleccionados"
+        v-model:selected="selected"
       >
-        <template #body="props">
-          <q-tr :props="props">
-            <q-td key="descripcion" :props="props">
-              {{ props.row.descripcion }}
-            </q-td>
-            <q-td key="peso_gramos" :props="props">
-              {{ props.row.peso_gramos }}
-            </q-td>
-            <q-td key="precio_neto" :props="props">
-              {{ props.row.precio_neto }}
-            </q-td>
-            <q-td key="stock" :props="props">
-              {{ props.row.stock }}
-            </q-td>
-          </q-tr>
+        <template v-slot:top-right>
+          <q-input
+            outlined
+            dense
+            debounce="300"
+            v-model="filter"
+            placeholder="Buscar"
+          >
+            <template v-slot:append>
+              <q-icon name="search" />
+            </template>
+          </q-input>
         </template>
       </q-table>
 
@@ -101,11 +112,57 @@ onMounted(async () => {
         <q-table
           class=""
           title="Productos de cliente"
-          :rows="productosSeleccionados"
-          :columns="columns"
-          no-data-label="sin cliente"
-        />
+          :rows="selected"
+          no-data-label="sin productos para cliente"
+        >
+          <template v-slot:header="">
+            <q-tr>
+              <q-th> ID </q-th>
+              <q-th> Descripcion </q-th>
+              <q-th> peso en gramos </q-th>
+              <q-th> precio neto </q-th>
+              <q-th> cantidad </q-th>
+            </q-tr>
+          </template>
+
+          <template v-slot:body="props">
+            <q-tr>
+              <q-td>
+                {{ props.row.id }}
+              </q-td>
+              <q-td>
+                {{ props.row.descripcion }}
+              </q-td>
+              <q-td>
+                {{ props.row.peso_gramos }}
+              </q-td>
+              <q-td>
+                {{ props.row.precio_neto }}
+              </q-td>
+              <q-td>
+                <q-btn
+                  color="red"
+                  label="-"
+                  @click="() => {
+                    if(props.row.cantidad <= 0) return
+                    props.row.cantidad--}"
+                ></q-btn>
+                {{ props.row.cantidad }}
+                <q-btn
+                  color="blue"
+                  label="+"
+                  @click="props.row.cantidad++"
+                ></q-btn>
+              </q-td>
+            </q-tr>
+          </template>
+        </q-table>
         <!-- metodos de pago -->
+        <q-card>
+          <q-card-section>
+            <div class="text-h6">Total a pagar ${{ totalPagar }}</div>
+          </q-card-section>
+        </q-card>
         <q-card>
           <q-card-section>
             <div class="text-h6">Metodos de pago</div>

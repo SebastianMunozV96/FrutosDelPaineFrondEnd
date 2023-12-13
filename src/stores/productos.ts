@@ -6,19 +6,27 @@ import {
   CrearProducto,
   ProductoUpdate,
   ProductoWithoutCategorias,
+  ProductoWIthCategoria,
 } from 'src/models/producto.model';
 
 export const useProductosStore = defineStore('productos', () => {
   //state
-  const productos = ref<Producto[]>([]);
+  const productos = ref<ProductoWIthCategoria[]>([]);
+  const categoriasLabelValue = ref<{ label: string, value: number }[]>([])
 
   // getters
   const countProducts = computed(() => productos.value.length);
 
   // actions
   async function getProductos() {
-    const { data } = await api.get<Producto[]>('/productos');
-    productos.value = data;
+    const { data } = await api.get<ProductoWIthCategoria[]>('/productos');
+    productos.value = data.map((prod) => ({...prod, cantidad: 1}));
+  }
+
+  async function getProductosPedidos(){
+    const result = await await api.get<ProductoWIthCategoria[]>('/productos');
+    const prodPedidos = result.data.map((prod) => ({...prod, cantidad: 0}))
+    return prodPedidos
   }
 
   async function crearProducto(
@@ -52,12 +60,21 @@ export const useProductosStore = defineStore('productos', () => {
     return result.data;
   }
 
+  async function getCategoriasLabelValue() {
+    const result = await api.get<{ label: string, value: number }[]>('/categorias');
+    if (!result.data) console.log('getCategoriasLabelValue error: ', result);
+    return result.data
+  }
+
   return {
     productos,
+    categoriasLabelValue,
     countProducts,
     getProductos,
     crearProducto,
     updateProducto,
     deleteProducto,
+    getCategoriasLabelValue,
+    getProductosPedidos
   };
 });

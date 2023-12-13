@@ -2,12 +2,14 @@
 import { ref } from 'vue';
 import { useAuthStore } from 'src/stores/auth';
 import { useRouter } from 'vue-router';
-const authStore = useAuthStore();
 
+const authStore = useAuthStore();
 const router = useRouter();
 
 const username = ref<string>('');
 const password = ref<string>('');
+
+const message = ref<string>('');
 
 const loginForm = {
   correo: username.value,
@@ -19,7 +21,7 @@ const onSubmit = async () => {
   if (result!.ok) {
     router.push({ name: 'main' });
   } else {
-    alert('Error al ingresar datos');
+    message.value = 'No existe usuario!';
   }
 };
 </script>
@@ -60,6 +62,9 @@ const onSubmit = async () => {
             <q-icon name="key" />
           </template>
         </q-input>
+        <div v-if="message" class="row justify-center q-my-md">
+          <div class="text-caption text-red">{{ message }}</div>
+        </div>
         <div class="row justify-center">
           <q-btn @click="onSubmit" color="secondary" label="Iniciar Sesión" />
         </div>

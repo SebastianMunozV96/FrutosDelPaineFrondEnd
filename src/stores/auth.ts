@@ -43,7 +43,7 @@ export const useAuthStore = defineStore('auth', () => {
       console.log('Stores Auth -> signInUser: ', token !== null);
       if (token) {
 
-        localStorage.setItem('OToken', token);
+        localStorage.setItem('token', token);
         localStorage.setItem('username', usuario.correo);
         localStorage.setItem('rol', usuario.rol);
 
@@ -51,7 +51,7 @@ export const useAuthStore = defineStore('auth', () => {
         username.value = usuario.correo;
         rol.value = usuario.rol;
         console.log('token ? : ', getToken.value !== null);
-        return { ok: true, message: 'ok' };
+        return { ok: true, message: 'iniciando sesión' };
       }
     } catch (error) {
       console.log('signInUser error: ', error);

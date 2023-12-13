@@ -62,40 +62,27 @@
 
 <script setup lang="ts">
 import { ref, toRefs, defineEmits, onMounted } from 'vue';
-import { api } from 'src/boot/axios';
-import { getCategorias } from '../composable/producto.service';
-import { CrearProducto } from '../models/producto.model';
+import { useProductosStore } from 'src/stores/productos';
+
+const productosStore = useProductosStore();
 
 const props = defineProps<{ dialogVisible: boolean }>();
 const { dialogVisible } = toRefs(props);
 const emits = defineEmits(['update:dialogVisible']);
 
 //--------Categoria-------/
-const optionCategoria = ref();
-const categoriaSelected = ref();
+const optionCategoria = ref<{ value: number; label: string }[]>([]);
+const categoriaSelected = ref<number>(0);
 //--------------------------------//
 
-const descripcion = ref<string>();
-const peso_gramos = ref<number>();
-const precio_neto = ref<number>();
-const stock = ref<number>();
-const cod_barra = ref<string>();
-const idCategoria = ref<number>();
+const descripcion = ref<string>('');
+const peso_gramos = ref<number>(0);
+const precio_neto = ref<number>(0);
+const stock = ref<number>(0);
+const cod_barra = ref<string>('');
+const idCategoria = ref<number>(0);
 
-try {
-  onMounted(async () => {
-    getCategorias()
-      .then((response) => {
-        optionCategoria.value = response;
-        console.log(optionCategoria);
-      })
-      .catch((error) => console.log('error al obtener categorias', error));
-  });
-} catch (error) {
-  console.log('error al obtener Categoria', error);
-}
-
-const procesarFormulario = () => {
+const procesarFormulario = async () => {
   idCategoria.value = categoriaSelected.value;
   const productoForm = {
     descripcion: descripcion.value,
@@ -105,12 +92,8 @@ const procesarFormulario = () => {
     cod_barras: cod_barra.value,
     Categorias_id: idCategoria.value,
   };
-  const InsertProducto = (producto: CrearProducto) => {
-    api
-      .post('/productos', producto)
-      .then((response) => console.log('respuesta del servidor post', response))
-      .catch((error) => console.log('error en resuesta del servidor', error));
-  };
+  const result = await productosStore.crearProducto(productoForm);
+  console.log('Result createProduct ', result);
 
   closeDialog();
 };
@@ -118,4 +101,8 @@ const procesarFormulario = () => {
 const closeDialog = () => {
   emits('update:dialogVisible', false);
 };
+
+onMounted(() => {
+  productosStore.getCategoriasLabelValue().then((response) => optionCategoria.value = response);
+});
 </script>
