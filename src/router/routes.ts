@@ -1,9 +1,11 @@
 import { RouteRecordRaw } from 'vue-router';
+import isAuthenticatedGuard from './AuthGuard';
 
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
+    beforeEnter: [isAuthenticatedGuard], // antes de pasar a la ruta principal verifica token en localStorage, sino redirige a login
     name: 'main',
     children: [
       { path: '', component: () => import('pages/IndexPage.vue') },
@@ -45,7 +47,13 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/login',
     component: () => import('layouts/loginLayout.vue'),
-    children: [{ path: '', component: () => import('pages/LoginPage.vue') }],
+    name: 'loginLayout',
+    children: [
+      {
+        path: '',
+        name: 'login',
+        component: () => import('pages/LoginPage.vue') }
+      ],
   },
 
   // Always leave this as last one,

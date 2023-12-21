@@ -13,7 +13,10 @@
 
         <q-toolbar-title> </q-toolbar-title>
 
-        <div></div>
+        <q-chip color="orange" text-color="white" :icon="iconRol">
+          {{ authStore.username }}
+        </q-chip>
+        <q-btn flat round dense icon="logout" @click="logOut()" />
       </q-toolbar>
     </q-header>
 
@@ -39,7 +42,17 @@
 import { ref } from 'vue';
 import EssentialLink from 'components/EssentialLink.vue';
 import { EssentialLinkProps } from 'src/components/models';
+import { useAuthStore } from 'src/stores/auth';
+import { useRouter } from 'vue-router';
+const authStore = useAuthStore();
+const route = useRouter()
 
+const iconRol = authStore.rol == "admin" ? "admin_panel_settings" : "person";
+
+const logOut = () => {
+  authStore.logout()
+  route.push({name: 'login'})
+}
 
 const essentialLinks: EssentialLinkProps[] = [
   {

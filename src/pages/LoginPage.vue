@@ -11,14 +11,15 @@ const password = ref<string>('');
 
 const message = ref<string>('');
 
-const loginForm = {
-  correo: username.value,
-  password: password.value,
-};
-
 const onSubmit = async () => {
+  const loginForm = {
+    correo: username.value,
+    password: password.value,
+  };
   const result = await authStore.signInUser(loginForm);
+  console.log("result login: ", result)
   if (result!.ok) {
+    message.value = 'inicio exitoso!'
     router.push({ name: 'main' });
   } else {
     message.value = 'No existe usuario!';

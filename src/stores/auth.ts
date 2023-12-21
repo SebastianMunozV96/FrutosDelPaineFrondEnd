@@ -3,14 +3,16 @@ import { authApi } from 'src/boot/axios';
 import { computed, ref } from 'vue';
 
 interface Usuario {
+  usuario:UsuarioData
+}
+
+interface UsuarioData{
   correo: string,
   rol: string
 }
-
 interface DataReturn {
-  usuario: Usuario,
+  user: Usuario,
   token: string
-
 }
 
 interface Message {
@@ -34,22 +36,23 @@ export const useAuthStore = defineStore('auth', () => {
   //actions
   async function signInUser(user: { correo: string, password: string }) {
     const { correo, password } = user;
+    console.log("signInUser: ", user)
     try {
       const { data } = await authApi.post<DataReturn>('/login', {
         correo,
-        password,
+        pass_encrypt: password,
       });
-      const { usuario, token } = data;
+      const { user, token } = data;
       console.log('Stores Auth -> signInUser: ', token !== null);
       if (token) {
 
         localStorage.setItem('token', token);
-        localStorage.setItem('username', usuario.correo);
-        localStorage.setItem('rol', usuario.rol);
+        localStorage.setItem('username', user.usuario.correo);
+        localStorage.setItem('rol', user.usuario.rol);
 
         idToken.value = token;
-        username.value = usuario.correo;
-        rol.value = usuario.rol;
+        username.value = user.usuario.correo;
+        rol.value = user.usuario.rol;
         console.log('token ? : ', getToken.value !== null);
         return { ok: true, message: 'iniciando sesión' };
       }
@@ -74,7 +77,7 @@ export const useAuthStore = defineStore('auth', () => {
     idToken.value = '';
     username.value = '';
     rol.value = '';
-    localStorage.removeItem('OToken');
+    localStorage.removeItem('token');
     localStorage.removeItem('username');
     localStorage.removeItem('rol');
 
