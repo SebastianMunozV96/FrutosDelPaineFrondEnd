@@ -3,12 +3,12 @@ import { authApi } from 'src/boot/axios';
 import { computed, ref } from 'vue';
 
 interface Usuario {
-  usuario:UsuarioData
+  usuario:UsuarioData,
+  rol: string
 }
 
 interface UsuarioData{
-  correo: string,
-  rol: string
+  correo: string
 }
 interface DataReturn {
   user: Usuario,
@@ -48,11 +48,11 @@ export const useAuthStore = defineStore('auth', () => {
 
         localStorage.setItem('token', token);
         localStorage.setItem('username', user.usuario.correo);
-        localStorage.setItem('rol', user.usuario.rol);
+        localStorage.setItem('rol', user.rol);
 
         idToken.value = token;
         username.value = user.usuario.correo;
-        rol.value = user.usuario.rol;
+        rol.value = user.rol;
         console.log('token ? : ', getToken.value !== null);
         return { ok: true, message: 'iniciando sesión' };
       }
