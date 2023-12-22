@@ -7,6 +7,9 @@
       @click="openDialog"
     >
     </q-btn>
+
+    <q-btn unelevated color="blue" label="Crear categoria" @click="openDialog2">
+    </q-btn>
     <q-table
       style="height: 400px"
       flat
@@ -18,8 +21,6 @@
     >
       <template #body="props">
         <q-tr :props="props">
-
-
           <q-td key="descripcion" :props="props">
             {{ props.row.descripcion }}
           </q-td>
@@ -61,23 +62,36 @@
         @update:dialogVisible="updateDialogVisible"
       />
     </Suspense>
+    <Suspense>
+      <CrearCategoria
+        :dialog-visible2="dialogVisible2"
+        @update:dialogVisible2="updateDialogVisible2"
+      />
+    </Suspense>
   </div>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import CrearProducto from '../components/crearProducto.vue';
+import CrearCategoria from 'src/components/crearCategoria.vue';
 import { Producto } from 'src/models/producto.model';
 import { getProductos, EliminarCol } from '../composable/producto.service';
 
 const dialogVisible = ref<boolean>(false);
+const dialogVisible2 = ref<boolean>(false);
 
 const openDialog = () => {
   dialogVisible.value = true;
 };
-
+const openDialog2 = () => {
+  dialogVisible2.value = true;
+};
 const updateDialogVisible = async (value: boolean) => {
   dialogVisible.value = value;
+};
+const updateDialogVisible2 = async (value: boolean) => {
+  dialogVisible2.value = value;
 };
 
 const deleteProduc = (id: number) => {

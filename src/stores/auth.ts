@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import { LocalStorage } from 'quasar';
 import { authApi } from 'src/boot/axios';
 import { computed, ref } from 'vue';
 

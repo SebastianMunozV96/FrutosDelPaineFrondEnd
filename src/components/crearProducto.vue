@@ -1,17 +1,28 @@
 <template>
-  <q-dialog v-model="dialogVisible">
-    <q-card>
+  <q-dialog v-model="dialogVisible" class="q-ma-xl">
+    <q-card style="width: 80vw">
       <q-card-section>
         <div class="text-center text-h5 q-pb-md">Crear un nuevo Producto</div>
         <q-form>
           <q-select
+            class="col"
             :options="optionCategoria"
             v-model="categoriaSelected"
             label="Categorias"
-          ></q-select>
-
+            use-input
+            use-chips
+            @new-value="createNewCategory"
+          >
+            <template v-slot:no-option>
+              <q-item>
+                <q-item-section class="text-italic text-grey">
+                  Sin Categorias
+                </q-item-section>
+              </q-item>
+            </template>
+          </q-select>
           <q-input
-            class="q-pb-md"
+            class="q-pb-md col"
             v-model.string="descripcion"
             label="Ingrese descripcion"
             :rules="[(val) => !!val || 'Este campo es obligatorio']"
@@ -80,7 +91,11 @@ const peso_gramos = ref<number>(0);
 const precio_neto = ref<number>(0);
 const stock = ref<number>(0);
 const cod_barra = ref<string>('');
-const idCategoria = ref<number>(0);
+const idCategoria = ref<number>();
+
+const createNewCategory = (value: string, done: any) => {
+  done(value, 'add-unique');
+};
 
 const procesarFormulario = async () => {
   idCategoria.value = categoriaSelected.value;
@@ -103,6 +118,8 @@ const closeDialog = () => {
 };
 
 onMounted(() => {
-  productosStore.getCategoriasLabelValue().then((response) => optionCategoria.value = response);
+  productosStore
+    .getCategoriasLabelValue()
+    .then((response) => (optionCategoria.value = response));
 });
 </script>

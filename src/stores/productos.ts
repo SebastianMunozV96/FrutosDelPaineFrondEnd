@@ -2,7 +2,6 @@ import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
 import { api } from 'src/boot/axios';
 import {
-  Producto,
   CrearProducto,
   ProductoUpdate,
   ProductoWithoutCategorias,
@@ -20,12 +19,12 @@ export const useProductosStore = defineStore('productos', () => {
   // actions
   async function getProductos() {
     const { data } = await api.get<ProductoWIthCategoria[]>('/productos');
-    productos.value = data.map((prod) => ({...prod, cantidad: 1}));
+    productos.value = data.map((prod) => ({ ...prod, cantidad: 1 }));
   }
 
-  async function getProductosPedidos(){
+  async function getProductosPedidos() {
     const result = await await api.get<ProductoWIthCategoria[]>('/productos');
-    const prodPedidos = result.data.map((prod) => ({...prod, cantidad: 0}))
+    const prodPedidos = result.data.map((prod) => ({ ...prod, cantidad: 0 }))
     return prodPedidos
   }
 
@@ -66,6 +65,15 @@ export const useProductosStore = defineStore('productos', () => {
     return result.data
   }
 
+  async function createCategoria(categoria: string) {
+    const result = await api.post('/categorias', {
+      categoria
+    })
+    if (!result.data) console.log('createCategoria error: ', result);
+    categoriasLabelValue.value = await getCategoriasLabelValue()
+    return result.data
+  }
+
   return {
     productos,
     categoriasLabelValue,
@@ -75,6 +83,7 @@ export const useProductosStore = defineStore('productos', () => {
     updateProducto,
     deleteProducto,
     getCategoriasLabelValue,
-    getProductosPedidos
+    getProductosPedidos,
+    createCategoria
   };
 });
