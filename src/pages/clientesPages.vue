@@ -16,7 +16,7 @@
       :rows="clientesRow"
       :columns="columns"
     >
-      <template #body="props">
+      <template v-slot:body="props">
         <q-tr :props="props">
           <q-td key="rut" :props="props">
             {{ props.row.rut }}
@@ -29,7 +29,7 @@
               @save="(val: string) => editarItemRut(props.row.rut, val)"
             >
               <q-input
-                v-model="scope.value"
+                v-model="scope!.value"
                 autofocus
                 counter
                 mask="########-#"
