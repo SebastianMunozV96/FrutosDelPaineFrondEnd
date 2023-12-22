@@ -20,7 +20,7 @@
         <q-tr :props="props">
           <q-td key="rut" :props="props">
             {{ props.row.rut }}
-            <a-popup-edit
+            <q-popup-edit
               v-slot="scope"
               v-model="props.row.rut"
               title="Editar rut"
@@ -37,12 +37,12 @@
                 @keyup.enter.stop
                 :rules="[(val) => !!val || 'Ingrese un rut']"
               />
-            </a-popup-edit>
+            </q-popup-edit>
           </q-td>
           <q-td key="giro" :props="props">
             {{ props.row.giro }}
 
-            <a-popup-edit
+            <q-popup-edit
               v-slot="scope"
               v-model="props.row.giro"
               title="Editar giro"
@@ -59,11 +59,11 @@
                 @keyup.enter.stop
                 :rules="[(val) => !!val || 'Ingrese un nombre']"
               />
-            </a-popup-edit>
+            </q-popup-edit>
           </q-td>
           <q-td key="nombre" :props="props">
             {{ props.row.nombre }}
-            <a-popup-edit
+            <q-popup-edit
               v-slot="scope"
               v-model="props.row.nombre"
               title="Editar nombre"
@@ -80,12 +80,12 @@
                 @keyup.enter.stop
                 :rules="[(val) => !!val || 'Ingrese un nombre']"
               />
-            </a-popup-edit>
+            </q-popup-edit>
           </q-td>
           <q-td key="telefono" :props="props">
             {{ props.row.telefono }}
 
-            <a-popup-edit
+            <q-popup-edit
               v-slot="scope"
               v-model="props.row.telefono"
               title="Editar telefono"
@@ -102,11 +102,11 @@
                 @keyup.enter.stop
                 :rules="[(val) => !!val || 'Ingrese un Telefono']"
               />
-            </a-popup-edit>
+            </q-popup-edit>
           </q-td>
           <q-td key="correo" :props="props">
             {{ props.row.correo }}
-            <a-popup-edit
+            <q-popup-edit
               v-slot="scope"
               v-model="props.row.correo"
               title="Editar correo"
@@ -123,11 +123,11 @@
                 @keyup.enter.stop
                 :rules="[(val) => !!val || 'Ingrese un correo']"
               />
-            </a-popup-edit>
+            </q-popup-edit>
           </q-td>
           <q-td key="pagina_web" :props="props">
             {{ props.row.pagina_web }}
-            <a-popup-edit
+            <q-popup-edit
               v-slot="scope"
               v-model="props.row.pagina_web"
               title="Editar pagina Web"
@@ -144,7 +144,7 @@
                 @keyup.enter.stop
                 :rules="[(val) => !!val || 'Ingrese un pagina web']"
               />
-            </a-popup-edit>
+            </q-popup-edit>
           </q-td>
 
           <q-td key="delete" :props="props">

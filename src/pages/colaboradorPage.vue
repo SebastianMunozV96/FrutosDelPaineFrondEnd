@@ -21,7 +21,7 @@
         <q-tr :props="props">
           <q-td key="nombres" :props="props">
             {{ props.row.nombres }}
-            <a-popup-edit
+            <q-popup-edit
               v-slot="scope"
               v-model="props.row.nombres"
               title="Editar nombres"
@@ -38,11 +38,11 @@
                 @keyup.enter.stop
                 :rules="[(val) => !!val || 'Ingrese un nombre']"
               />
-            </a-popup-edit>
+            </q-popup-edit>
           </q-td>
           <q-td key="apellidos" :props="props">
             {{ props.row.apellidos }}
-            <a-popup-edit
+            <q-popup-edit
               v-slot="scope"
               v-model="props.row.apellidos"
               title="Editar apellido"
@@ -59,11 +59,11 @@
                 @keyup.enter.stop
                 :rules="[(val) => !!val || 'Ingrese un apellido']"
               />
-            </a-popup-edit>
+            </q-popup-edit>
           </q-td>
           <q-td key="correo" :props="props">
             {{ props.row.correo }}
-            <a-popup-edit
+            <q-popup-edit
               v-slot="scope"
               v-model="props.row.correo"
               title="Editar correo"
@@ -83,11 +83,11 @@
                   (val) => /.+@.+\..+/.test(val) || 'Correo no Valido',
                 ]"
               />
-            </a-popup-edit>
+            </q-popup-edit>
           </q-td>
           <q-td key="celular" :props="props">
             {{ props.row.celular }}
-            <a-popup-edit
+            <q-popup-edit
               v-slot="scope"
               v-model="props.row.celular"
               title="Editar celular"
@@ -104,7 +104,7 @@
                 unmasked-value
                 @keyup.enter.stop
               />
-            </a-popup-edit>
+            </q-popup-edit>
           </q-td>
 
           <q-td key="delete" :props="props">

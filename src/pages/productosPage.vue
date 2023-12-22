@@ -23,7 +23,7 @@
         <q-tr :props="props">
           <q-td key="descripcion" :props="props">
             {{ props.row.descripcion }}
-            <a-popup-edit
+            <q-popup-edit
               v-slot="scope"
               v-model="props.row.descripcion"
               title="Editar descripcion"
@@ -40,11 +40,11 @@
                 @keyup.enter.stop
                 :rules="[(val) => !!val || 'Ingrese un descripcion']"
               />
-            </a-popup-edit>
+            </q-popup-edit>
           </q-td>
           <q-td key="peso_gramos" :props="props">
             {{ props.row.peso_gramos }}
-            <a-popup-edit
+            <q-popup-edit
               v-slot="scope"
               v-model="props.row.peso_gramos"
               title="Editar el peso Gramo"
@@ -61,11 +61,11 @@
                 @keyup.enter.stop
                 :rules="[(val) => !!val || 'Ingrese un peso gramo']"
               />
-            </a-popup-edit>
+            </q-popup-edit>
           </q-td>
           <q-td key="precio_neto" :props="props">
             {{ props.row.precio_neto }}
-            <a-popup-edit
+            <q-popup-edit
               v-slot="scope"
               v-model="props.row.precio_neto"
               title="Editar el peso Gramo"
@@ -82,11 +82,11 @@
                 @keyup.enter.stop
                 :rules="[(val) => !!val || 'Ingrese un peso precio neto']"
               />
-            </a-popup-edit>
+            </q-popup-edit>
           </q-td>
           <q-td key="stock" :props="props">
             {{ props.row.stock }}
-            <a-popup-edit
+            <q-popup-edit
               v-slot="scope"
               v-model="props.row.stock"
               title="Editar el stock"
@@ -103,11 +103,11 @@
                 @keyup.enter.stop
                 :rules="[(val) => !!val || 'Ingrese un peso stock']"
               />
-            </a-popup-edit>
+            </q-popup-edit>
           </q-td>
           <q-td key="cod_barras" :props="props">
             {{ props.row.cod_barras }}
-            <a-popup-edit
+            <q-popup-edit
               v-slot="scope"
               v-model="props.row.cod_barras"
               title="Editar el cod.Barra"
@@ -124,7 +124,7 @@
                 @keyup.enter.stop
                 :rules="[(val) => !!val || 'Ingrese un peso codigo de barra']"
               />
-            </a-popup-edit>
+            </q-popup-edit>
           </q-td>
 
           <q-td key="delete" :props="props">

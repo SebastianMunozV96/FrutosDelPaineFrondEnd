@@ -20,7 +20,7 @@
         <q-tr :props="props">
           <q-td key="rut" :props="props">
             {{ props.row.rut }}
-            <a-popup-edit
+            <q-popup-edit
               v-slot="scope"
               v-model="props.row.rut"
               title="Editar rut"
@@ -37,12 +37,12 @@
                 @keyup.enter.stop
                 :rules="[(val) => !!val || 'Ingrese un rut']"
               />
-            </a-popup-edit>
+            </q-popup-edit>
           </q-td>
 
           <q-td key="nombre" :props="props">
             {{ props.row.nombre }}
-            <a-popup-edit
+            <q-popup-edit
               v-slot="scope"
               v-model="props.row.nombre"
               title="Editar nombre"
@@ -59,12 +59,12 @@
                 @keyup.enter.stop
                 :rules="[(val) => !!val || 'Ingrese un nombre']"
               />
-            </a-popup-edit>
+            </q-popup-edit>
           </q-td>
 
           <q-td key="apellido" :props="props">
             {{ props.row.apellido }}
-            <a-popup-edit
+            <q-popup-edit
               v-slot="scope"
               v-model="props.row.apellido"
               title="Editar apellido"
@@ -81,12 +81,12 @@
                 @keyup.enter.stop
                 :rules="[(val) => !!val || 'Ingrese un apellido']"
               />
-            </a-popup-edit>
+            </q-popup-edit>
           </q-td>
 
           <q-td key="correo" :props="props">
             {{ props.row.correo }}
-            <a-popup-edit
+            <q-popup-edit
               v-slot="scope"
               v-model="props.row.correo"
               title="Editar correo"
@@ -106,12 +106,12 @@
                   (val) => /.+@.+\..+/.test(val) || 'Correo no Valido',
                 ]"
               />
-            </a-popup-edit>
+            </q-popup-edit>
           </q-td>
 
           <q-td key="celular" :props="props">
             {{ props.row.celular }}
-            <a-popup-edit
+            <q-popup-edit
               v-slot="scope"
               v-model="props.row.celular"
               title="Editar celular"
@@ -128,7 +128,7 @@
                 unmasked-value
                 @keyup.enter.stop
               />
-            </a-popup-edit>
+            </q-popup-edit>
           </q-td>
 
           <q-td key="delete" :props="props">
@@ -166,12 +166,12 @@ import { useClientesStore } from 'src/stores/clientes';
 
 const clientesStore = useClientesStore();
 
-const editarItemRut = async (id:number , val:string)=>{
+const editarItemRut = async (id: number, val: string) => {
   const rutObj = {
-    rut:val,
+    rut: val,
   };
-  console.log('editarItemRut',id,rutObj);
-  await clientesStore.updateCliente(id,rutObj);
+  console.log('editarItemRut', id, rutObj);
+  await clientesStore.updateCliente(id, rutObj);
 };
 
 const editarItemNombre = async (id: number, val: string) => {
