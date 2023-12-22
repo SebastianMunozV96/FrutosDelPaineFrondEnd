@@ -237,7 +237,7 @@ const columns = [
 // };
 
 onMounted(async () => {
-  colaboradoresStore.getColaborador()
+  colaboradoresStore.getColaborador();
   // getColabor();
 
   // console.log(columns);

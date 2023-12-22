@@ -29,7 +29,7 @@
               title="Editar descripcion"
               buttons
               persistent
-              @save="(val: string) => editarItemDescripcion(props.row.descripcion, val)"
+              @save="(val: string) => editarItemDescripcion(props.row.id, val)"
             >
               <q-input
                 v-model="scope.value"
@@ -50,7 +50,7 @@
               title="Editar el peso Gramo"
               buttons
               persistent
-              @save="(val: number) => editarItemPesoGramos(props.row.peso_gramos, val)"
+              @save="(val: number) => editarItemPesoGramos(props.row.id, val)"
             >
               <q-input
                 v-model="scope.value"
@@ -71,7 +71,7 @@
               title="Editar el peso Gramo"
               buttons
               persistent
-              @save="(val: number) => editarItemPrecioNeto(props.row.precio_neto, val)"
+              @save="(val: number) => editarItemPrecioNeto(props.row.id, val)"
             >
               <q-input
                 v-model="scope.value"
@@ -92,7 +92,7 @@
               title="Editar el stock"
               buttons
               persistent
-              @save="(val: number) => editarItemStock(props.row.stock , val)"
+              @save="(val: number) => editarItemStock(props.row.id , val)"
             >
               <q-input
                 v-model="scope.value"
@@ -113,7 +113,7 @@
               title="Editar el cod.Barra"
               buttons
               persistent
-              @save="(val:string) => editarItemCodBarra(props.row.cod_barras, val)"
+              @save="(val:string) => editarItemCodBarra(props.row.id, val)"
             >
               <q-input
                 v-model="scope.value"
