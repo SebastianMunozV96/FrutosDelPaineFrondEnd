@@ -6,17 +6,25 @@ import { Venta } from '../models/venta.model';
 import { useProductosStore } from 'src/stores/productos';
 import { storeToRefs } from 'pinia';
 import { ProductoWIthCategoria } from '../models/producto.model';
+import { useVentasStore } from 'src/stores/ventas';
 
 const storeProductos = useProductosStore();
+const ventasStore = useVentasStore()
 const { productos } = storeToRefs(storeProductos);
 
 const ventasRow = ref<Venta[]>([]);
+const metodosPago = ref<{ label: string, value: number }[]>([])
 // const celularPedido = ref(false);
 
 //productos
 
+const formatMoneyCLP = (valor: number) => {
+  return new Intl.NumberFormat('es-CL', {currency: 'CLP', style: 'currency'}).format(valor)
+}
+
 const selected = ref<ProductoWIthCategoria[]>([]);
 const filter = ref();
+const groupMetodo = ref()
 
 const columns = ref();
 
@@ -57,6 +65,7 @@ const totalPagar = computed(() =>
 );
 
 onMounted(async () => {
+  ventasStore.getAllMetodosDePage()
   storeProductos.getProductos();
   ventasRow.value = await geVenta();
   columns.value = Object.keys(ventasRow.value).map((key) => ({
@@ -139,15 +148,19 @@ watch(selected, (newValue, oldValue) => {
               <q-td>
                 {{ props.row.precio_neto }}
               </q-td>
-              <q-td>
+              <q-td class="row justify-between">
                 <q-btn
                   color="red"
                   label="-"
-                  @click="() => {
-                    if(props.row.cantidad <= 0) return
-                    props.row.cantidad--}"
+                  @click="
+                    () => {
+                      if (props.row.cantidad <= 0) return;
+                      props.row.cantidad--;
+                    }
+                  "
                 ></q-btn>
-                {{ props.row.cantidad }}
+                <div class="text-weight-bolder">{{ props.row.cantidad }}</div>
+
                 <q-btn
                   color="blue"
                   label="+"
@@ -160,28 +173,23 @@ watch(selected, (newValue, oldValue) => {
         <!-- metodos de pago -->
         <q-card>
           <q-card-section>
-            <div class="text-h6">Total a pagar ${{ totalPagar }}</div>
+            <div class="text-h6">Total a pagar {{ formatMoneyCLP(totalPagar) }}</div>
           </q-card-section>
         </q-card>
-        <q-card>
+        <q-card class="">
           <q-card-section>
             <div class="text-h6">Metodos de pago</div>
           </q-card-section>
 
-          <q-card-section>
-            <div class="q-gutter-sm">
+          <q-card-section class="row justify-between">
+            <div class=" q-gutter-sm row">
               <!-- v-for de metodos de pago -->
-              <q-radio
-                dense
-                v-model="metodoPago"
-                val="Efectivo"
-                label="Efectivo"
-              />
-              <q-radio dense v-model="metodoPago" val="Debito" label="Debito" />
+              <q-option-group class="col" type="radio" v-model="groupMetodo" :options="ventasStore.metodosDePage" />
             </div>
+            <q-btn color="blue" label="Pagar"> </q-btn>
           </q-card-section>
         </q-card>
-        <q-btn color="blue" label="Pagar"> </q-btn>
+
       </div>
     </div>
   </div>

@@ -9,9 +9,6 @@
             :options="optionCategoria"
             v-model="categoriaSelected"
             label="Categorias"
-            use-input
-            use-chips
-            @new-value="createNewCategory"
           >
             <template v-slot:no-option>
               <q-item>
@@ -32,7 +29,10 @@
             v-model.number="peso_gramos"
             label="Ingrese peso en gramos"
             mask="#############"
-            :rules="[(val) => !!val || 'Este campo es obligatorio']"
+            :rules="[
+              (val) => !!val || 'Este campo es obligatorio',
+              (val) => val >= 0 || 'debe ser un valor positivo',
+            ]"
           />
 
           <q-input
@@ -40,7 +40,10 @@
             v-model.number="precio_neto"
             label="Ingrese precio"
             mask="#######"
-            :rules="[(val) => !!val || 'Este campo es obligatorio']"
+            :rules="[
+              (val) => !!val || 'Este campo es obligatorio',
+              (val) => val >= 0 || 'debe ser un valor positivo',
+            ]"
           />
 
           <q-input
@@ -48,7 +51,10 @@
             v-model.number="stock"
             label="Ingrese stock"
             mask="###"
-            :rules="[(val) => !!val || 'Este campo es obligatorio']"
+            :rules="[
+              (val) => !!val || 'Este campo es obligatorio',
+              (val) => val >= 1 || 'debe ser un valor positivo mayor o igual a 1',
+            ]"
           />
           <q-input
             v-model.string="cod_barra"

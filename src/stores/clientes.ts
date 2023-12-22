@@ -6,14 +6,10 @@ import {
   ClienteInsert,
   ClienteUpdate,
 } from 'src/models/cliente.model';
-import { useAuthStore } from './auth';
-
-const authStore = useAuthStore()
 export const useClientesStore = defineStore('clientes', () => {
 
   // state
   const clientes = ref<Cliente[]>([])
-  const token = ref<string | null>()
 
   // actions
   const getClientes = async () => {

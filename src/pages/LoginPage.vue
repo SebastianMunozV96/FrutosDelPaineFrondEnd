@@ -54,6 +54,7 @@ const onSubmit = async () => {
           v-model="password"
           label="Contraseña"
           type="password"
+          @keyup.enter="onSubmit"
           :rules="[
             (val) => !!val || 'Ingrese password',
             (val) => val.length >= 8 || 'debe ser mayor o igual a 8 caracteres',
