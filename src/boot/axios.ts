@@ -18,12 +18,12 @@ declare module '@vue/runtime-core' {
 
 const serverURL =
   process.env.NODE_ENV == 'production'
-    ? 'https://frutosdelpaine.onrender.com/api/v1'
+    ? 'https://proyectofrustosdelpaine-production.up.railway.app/api/v1'
     : 'http://localhost:5000/api/v1';
 
 const authUrl =
   process.env.NODE_ENV == 'production'
-    ? 'https://frutosdelpaine.onrender.com/api/v1/auth'
+    ? 'https://proyectofrustosdelpaine-production.up.railway.app/api/v1/auth'
     : 'http://localhost:5000/api/v1/auth';
 
 const api = axios.create({ baseURL: serverURL });
