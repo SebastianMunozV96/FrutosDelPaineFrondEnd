@@ -13,7 +13,7 @@
       flat
       bordered
       title="Tabla de Colaboradores"
-      :rows="colaboradoresRow"
+      :rows="colaboradoresStore.colaboradores"
       :columns="columns"
       no-data-label="No se encontro ningun Colaborador"
     >
@@ -27,7 +27,7 @@
               title="Editar nombres"
               buttons
               persistent
-              @save="(val: string) => editarItemNombre(props.row.nombres, val)"
+              @save="(val: string) => colaboradoresStore.updateColaborador(props.row.id, {nombres: val})"
             >
               <q-input
                 v-model="scope.value"
@@ -48,7 +48,7 @@
               title="Editar apellido"
               buttons
               persistent
-              @save="(val: string) => editarItemApellido(props.row.apellidos, val)"
+              @save="(val: string) => colaboradoresStore.updateColaborador(props.row.id, {apellidos: val})"
             >
               <q-input
                 v-model="scope.value"
@@ -69,7 +69,7 @@
               title="Editar correo"
               buttons
               persistent
-              @save="(val: string) => editarItemCorreo(props.row.correo, val)"
+              @save="(val: string) => colaboradoresStore.updateColaborador(props.row.id, {correo: val})"
             >
               <q-input
                 v-model="scope.value"
@@ -93,7 +93,7 @@
               title="Editar celular"
               buttons
               persistent
-              @save="(val:string) => editarItemCelular(props.row.celular, val)"
+              @save="(val:string) => colaboradoresStore.updateColaborador(props.row.id, {celular: val})"
             >
               <q-input
                 v-model="scope.value"
@@ -112,7 +112,7 @@
               size="md"
               color="red"
               label="Eliminar "
-              @click="deleteColabor(props.row.id)"
+              @click="colaboradoresStore.deleteColaborador(props.row.id)"
             >
               <q-icon name="delete" />
             </q-btn>
@@ -133,46 +133,46 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { Colaborador } from '../models/colaboradores.model';
-import {
-  getColaboradores,
-  EliminarCol,
-} from '../composable/colaborador.service';
+// import {
+//   getColaboradores,
+//   EliminarCol,
+// } from '../composable/colaborador.service';
 import CrearColaborador from '../components/CrearColaborador.vue';
 import { useColaboradorStore } from 'src/stores/colaborador';
 
 const colaboradoresStore = useColaboradorStore();
 
-const editarItemNombre = async (id: number, val: string) => {
-  const nameObj = {
-    nombre: val,
-  };
-  console.log('editarItemNombre ', id, nameObj);
-  await colaboradoresStore.updateColaborador(id, nameObj);
-};
+// const editarItemNombre = async (id: number, val: string) => {
+//   const nameObj = {
+//     nombre: val,
+//   };
+//   console.log('editarItemNombre ', id, nameObj);
+//   await colaboradoresStore.updateColaborador(id, nameObj);
+// };
 
-const editarItemApellido = async (id: number, val: string) => {
-  const apellidoObj = {
-    apellido: val,
-  };
-  console.log('editarItemApellido', id, apellidoObj);
-  await colaboradoresStore.updateColaborador(id, apellidoObj);
-};
+// const editarItemApellido = async (id: number, val: string) => {
+//   const apellidoObj = {
+//     apellido: val,
+//   };
+//   console.log('editarItemApellido', id, apellidoObj);
+//   await colaboradoresStore.updateColaborador(id, apellidoObj);
+// };
 
-const editarItemCorreo = async (id: number, val: string) => {
-  const correoObj = {
-    correo: val,
-  };
-  console.log('editarItemCorreo', id, correoObj);
-  await colaboradoresStore.updateColaborador(id, correoObj);
-};
+// const editarItemCorreo = async (id: number, val: string) => {
+//   const correoObj = {
+//     correo: val,
+//   };
+//   console.log('editarItemCorreo', id, correoObj);
+//   await colaboradoresStore.updateColaborador(id, correoObj);
+// };
 
-const editarItemCelular = async (id: number, val: string) => {
-  const celularObj = {
-    celular: val,
-  };
-  console.log('editarItemCelular', id, celularObj);
-  await colaboradoresStore.updateColaborador(id, celularObj);
-};
+// const editarItemCelular = async (id: number, val: string) => {
+//   const celularObj = {
+//     celular: val,
+//   };
+//   console.log('editarItemCelular', id, celularObj);
+//   await colaboradoresStore.updateColaborador(id, celularObj);
+// };
 
 const dialogVisible = ref<boolean>(false);
 const openDialog = () => {
@@ -182,18 +182,18 @@ const updateDialogVisible = async (value: boolean) => {
   dialogVisible.value = value;
 };
 
-const deleteColabor = (id: number) => {
-  EliminarCol(id)
-    .then((response) => {
-      console.log('Colaborador eliminado', response);
-    })
-    .catch((error) => {
-      console.log('Colaborador eliminado', error);
-    })
-    .finally(() => {
-      getColabor();
-    });
-};
+// const deleteColabor = (id: number) => {
+//   EliminarCol(id)
+//     .then((response) => {
+//       console.log('Colaborador eliminado', response);
+//     })
+//     .catch((error) => {
+//       console.log('Colaborador eliminado', error);
+//     })
+//     .finally(() => {
+//       getColabor();
+//     });
+// };
 
 const colaboradoresRow = ref<Colaborador[]>();
 
@@ -225,20 +225,21 @@ const columns = [
   },
 ];
 
-const getColabor = () => {
-  getColaboradores()
-    .then((response) => {
-      colaboradoresRow.value = response;
-      console.log(colaboradoresRow.value);
-    })
-    .catch((error) =>
-      console.log('error al obtener los datos de ususarios', error)
-    );
-};
+// const getColabor = () => {
+//   getColaboradores()
+//     .then((response) => {
+//       colaboradoresRow.value = response;
+//       console.log(colaboradoresRow.value);
+//     })
+//     .catch((error) =>
+//       console.log('error al obtener los datos de ususarios', error)
+//     );
+// };
 
 onMounted(async () => {
-  getColabor();
+  colaboradoresStore.getColaborador()
+  // getColabor();
 
-  console.log(columns);
+  // console.log(columns);
 });
 </script>

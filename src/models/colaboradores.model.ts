@@ -1,7 +1,7 @@
 export type Colaborador = {
   id: number;
-  nombre: string | null;
-  apellido: string | null;
+  nombres: string | null;
+  apellidos: string | null;
   correo: string | null;
   celular: string | null;
   direccion_id: number;
