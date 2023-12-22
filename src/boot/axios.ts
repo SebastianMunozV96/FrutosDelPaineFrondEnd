@@ -1,6 +1,6 @@
 import { boot } from 'quasar/wrappers';
 import axios from 'axios';
-import type { AxiosInstance } from 'axios'
+import type { AxiosInstance } from 'axios';
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
@@ -27,13 +27,12 @@ const authUrl =
     : 'http://localhost:5000/api/v1/auth';
 
 const api = axios.create({ baseURL: serverURL });
-const authApi = axios.create({ baseURL: authUrl })
+const authApi = axios.create({ baseURL: authUrl });
 
-const token = localStorage.getItem('token')
+const token = localStorage.getItem('token');
 
 export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
-
 
   // ^ ^ ^ this will allow you to use this.$axios (for Vue Options API form)
   //       so you won't necessarily have to import axios in each vue file
@@ -42,8 +41,8 @@ export default boot(({ app }) => {
       config.headers.Authorization = `Bearer ${token}`;
       return config;
     },
-    error => Promise.reject(error),
-  )
+    (error) => Promise.reject(error)
+  );
 
   app.config.globalProperties.$axios = axios;
   app.config.globalProperties.$api = api;

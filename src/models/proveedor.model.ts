@@ -13,4 +13,4 @@ export type ProveedorInsert = Omit<Proveedor, 'id'>;
 
 export type ProveedorDelete = Proveedor;
 
-export type ProveedorUpdate = Proveedor;
+export type ProveedorUpdate = Partial<Proveedor>;

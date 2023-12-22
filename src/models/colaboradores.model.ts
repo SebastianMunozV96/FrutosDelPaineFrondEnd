@@ -11,6 +11,6 @@ export type ColaboradorWhitoutDireccion = Omit<Colaborador, 'direccion_id'>;
 
 export type ColaboradorInsert = Omit<Colaborador, 'id'>;
 
-export type ColaboradorUpdate = Colaborador;
+export type ColaboradorUpdate = Partial<Colaborador>;
 
 export type ColaboradorDelete = Colaborador;

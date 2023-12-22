@@ -20,28 +20,133 @@
         <q-tr :props="props">
           <q-td key="rut" :props="props">
             {{ props.row.rut }}
+            <a-popup-edit
+              v-slot="scope"
+              v-model="props.row.rut"
+              title="Editar rut"
+              buttons
+              persistent
+              @save="(val:number) => editarItemRut(props.row.rut, val)"
+            >
+              <q-input
+                v-model="scope.value"
+                autofocus
+                counter
+                mask="########-#"
+                unmasked-value
+                @keyup.enter.stop
+                :rules="[(val) => !!val || 'Ingrese un rut']"
+              />
+            </a-popup-edit>
           </q-td>
           <q-td key="giro" :props="props">
             {{ props.row.giro }}
+
+            <a-popup-edit
+              v-slot="scope"
+              v-model="props.row.giro"
+              title="Editar giro"
+              buttons
+              persistent
+              @save="(val:number) => editarItemGiro(props.row.giro , val)"
+            >
+              <q-input
+                v-model="scope.value"
+                autofocus
+                counter
+                mask="###.##"
+                unmasked-value
+                @keyup.enter.stop
+                :rules="[(val) => !!val || 'Ingrese un nombre']"
+              />
+            </a-popup-edit>
           </q-td>
           <q-td key="nombre" :props="props">
             {{ props.row.nombre }}
+            <a-popup-edit
+              v-slot="scope"
+              v-model="props.row.nombre"
+              title="Editar nombre"
+              buttons
+              persistent
+              @save="(val: string) => editarItemNombre(props.row.nombre, val)"
+            >
+              <q-input
+                v-model="scope.value"
+                autofocus
+                counter
+                mask="SSSSSSSSSSSSSSSSSSSSSSSS"
+                unmasked-value
+                @keyup.enter.stop
+                :rules="[(val) => !!val || 'Ingrese un nombre']"
+              />
+            </a-popup-edit>
           </q-td>
           <q-td key="telefono" :props="props">
             {{ props.row.telefono }}
+
+            <a-popup-edit
+              v-slot="scope"
+              v-model="props.row.telefono"
+              title="Editar telefono"
+              buttons
+              persistent
+              @save="(val: number) => editarItemTelefono(props.row.telefono, val)"
+            >
+              <q-input
+                v-model="scope.value"
+                autofocus
+                counter
+                mask="(+56) # #### ####"
+                unmasked-value
+                @keyup.enter.stop
+                :rules="[(val) => !!val || 'Ingrese un Telefono']"
+              />
+            </a-popup-edit>
           </q-td>
           <q-td key="correo" :props="props">
             {{ props.row.correo }}
+            <a-popup-edit
+              v-slot="scope"
+              v-model="props.row.correo"
+              title="Editar correo"
+              buttons
+              persistent
+              @save="(val: string) => editarItemCorreo(props.row.correo , val)"
+            >
+              <q-input
+                v-model="scope.value"
+                autofocus
+                counter
+                mask="AAAAAAA@AAAAAAA.AAA"
+                unmasked-value
+                @keyup.enter.stop
+                :rules="[(val) => !!val || 'Ingrese un correo']"
+              />
+            </a-popup-edit>
           </q-td>
           <q-td key="pagina_web" :props="props">
             {{ props.row.pagina_web }}
+            <a-popup-edit
+              v-slot="scope"
+              v-model="props.row.pagina_web"
+              title="Editar pagina Web"
+              buttons
+              persistent
+              @save="(val: string) => editarItemPaginaWeb(props.row.pagina_web, val)"
+            >
+              <q-input
+                v-model="scope.value"
+                autofocus
+                counter
+                mask="SSSSSSSSSSSSSSSSSSSSSSSS"
+                unmasked-value
+                @keyup.enter.stop
+                :rules="[(val) => !!val || 'Ingrese un pagina web']"
+              />
+            </a-popup-edit>
           </q-td>
 
-          <q-td key="update" :props="props">
-            <q-btn size="md" color="blue" label="Editar">
-              <q-icon name="edit" />
-            </q-btn>
-          </q-td>
           <q-td key="delete" :props="props">
             <q-btn
               size="md"
@@ -70,6 +175,57 @@ import { onMounted, ref } from 'vue';
 import { getProveedores, EliminarCol } from '../composable/proveedor.service';
 import { Proveedor } from 'src/models/proveedor.model';
 import CrearProveedor from '../components/crearProveedor.vue';
+import { useProveedorStore } from 'src/stores/proveedor';
+
+const proveedorStore = useProveedorStore();
+
+const editarItemRut = async (id: number, val: number) => {
+  const rutObj = {
+    rut: val,
+  };
+  console.log('editarItemRut', id, rutObj);
+  await proveedorStore.updateProveedor(id, rutObj);
+};
+
+const editarItemGiro = async (id: number, val: number) => {
+  const giroObj = {
+    giro: val,
+  };
+  console.log('editarItemGiro ', id, giroObj);
+  await proveedorStore.updateProveedor(id, giroObj);
+};
+
+const editarItemNombre = async (id: number, val: string) => {
+  const nameObj = {
+    nombre: val,
+  };
+  console.log('editarItemNombre ', id, nameObj);
+  await proveedorStore.updateProveedor(id, nameObj);
+};
+
+const editarItemTelefono = async (id: number, val: number) => {
+  const teleObj = {
+    telefono: val,
+  };
+  console.log('editarItemTelefono', id, teleObj);
+  await proveedorStore.updateProveedor(id, teleObj);
+};
+
+const editarItemCorreo = async (id: number, val: string) => {
+  const correoObj = {
+    correo: val,
+  };
+  console.log('editarItemCorreo ', id, correoObj);
+  await proveedorStore.updateProveedor(id, correoObj);
+};
+
+const editarItemPaginaWeb = async (id: number, val: string) => {
+  const pagObj = {
+    pagina_web: val,
+  };
+  console.log('editarItemPaginaWeb ', id, pagObj);
+  await proveedorStore.updateProveedor(id, pagObj);
+};
 
 const dialogVisible = ref<boolean>(false);
 
@@ -126,14 +282,9 @@ const columns = [
     label: 'pagina web',
   },
   {
-    field: 'update',
-    name: 'update',
-    label: '',
-  },
-  {
     field: 'delete',
     name: 'delete',
-    label: '',
+    label: 'delete',
   },
 ];
 
