@@ -20,25 +20,117 @@
         <q-tr :props="props">
           <q-td key="rut" :props="props">
             {{ props.row.rut }}
-          </q-td>
-          <q-td key="nombre" :props="props">
-            {{ props.row.nombre }}
-          </q-td>
-          <q-td key="apellido" :props="props">
-            {{ props.row.apellido }}
-          </q-td>
-          <q-td key="correo" :props="props">
-            {{ props.row.correo }}
-          </q-td>
-          <q-td key="celular" :props="props">
-            {{ props.row.celular }}
+            <a-popup-edit
+              v-slot="scope"
+              v-model="props.row.rut"
+              title="Editar rut"
+              buttons
+              persistent
+              @save="(val: string) => editarItemRut(props.row.rut, val)"
+            >
+              <q-input
+                v-model="scope.value"
+                autofocus
+                counter
+                mask="########-#"
+                unmasked-value
+                @keyup.enter.stop
+                :rules="[(val) => !!val || 'Ingrese un rut']"
+              />
+            </a-popup-edit>
           </q-td>
 
-          <q-td key="update" :props="props">
-            <q-btn size="md" color="blue" label="Editar">
-              <q-icon name="edit" />
-            </q-btn>
+          <q-td key="nombre" :props="props">
+            {{ props.row.nombre }}
+            <a-popup-edit
+              v-slot="scope"
+              v-model="props.row.nombre"
+              title="Editar nombre"
+              buttons
+              persistent
+              @save="(val: string) => editarItemNombre(props.row.nombre, val)"
+            >
+              <q-input
+                v-model="scope.value"
+                autofocus
+                counter
+                mask="SSSSSSSSSSSSSSSSSSSSSSSS"
+                unmasked-value
+                @keyup.enter.stop
+                :rules="[(val) => !!val || 'Ingrese un nombre']"
+              />
+            </a-popup-edit>
           </q-td>
+
+          <q-td key="apellido" :props="props">
+            {{ props.row.apellido }}
+            <a-popup-edit
+              v-slot="scope"
+              v-model="props.row.apellido"
+              title="Editar apellido"
+              buttons
+              persistent
+              @save="(val: string) => editarItemApellido(props.row.apellido, val)"
+            >
+              <q-input
+                v-model="scope.value"
+                autofocus
+                counter
+                mask="SSSSSSSSSSSSSSSSSSSSSSSS"
+                unmasked-value
+                @keyup.enter.stop
+                :rules="[(val) => !!val || 'Ingrese un apellido']"
+              />
+            </a-popup-edit>
+          </q-td>
+
+          <q-td key="correo" :props="props">
+            {{ props.row.correo }}
+            <a-popup-edit
+              v-slot="scope"
+              v-model="props.row.correo"
+              title="Editar correo"
+              buttons
+              persistent
+              @save="(val: string) => editarItemCorreo(props.row.correo, val)"
+            >
+              <q-input
+                v-model="scope.value"
+                autofocus
+                counter
+                mask="AAAAAAA@AAAAAAA.AAA"
+                unmasked-value
+                @keyup.enter.stop
+                :rules="[
+                  (val) => !!val || 'Ingrese un correo',
+                  (val) => /.+@.+\..+/.test(val) || 'Correo no Valido',
+                ]"
+              />
+            </a-popup-edit>
+          </q-td>
+
+          <q-td key="celular" :props="props">
+            {{ props.row.celular }}
+            <a-popup-edit
+              v-slot="scope"
+              v-model="props.row.celular"
+              title="Editar celular"
+              buttons
+              persistent
+              @save="(val: string) => editarItemCelular(props.row.celular, val)"
+            >
+              <q-input
+                v-model="scope.value"
+                autofocus
+                counter
+                mask="(+56) 9 ########"
+                :rules="[(val) => !!val || 'Ingrese un numero de Celular']"
+                unmasked-value
+                @keyup.enter.stop
+              />
+            </a-popup-edit>
+          </q-td>
+
           <q-td key="delete" :props="props">
             <q-btn
               size="md"
@@ -70,6 +162,48 @@ import {
   getClientes,
 } from '../composable/clientes.service';
 import CrearCliente from '../components/CrearCliente.vue';
+import { useClientesStore } from 'src/stores/clientes';
+
+const clientesStore = useClientesStore();
+
+const editarItemRut = async (id:number , val:string)=>{
+  const rutObj = {
+    rut:val,
+  };
+  console.log('editarItemRut',id,rutObj);
+  await clientesStore.updateCliente(id,rutObj);
+};
+
+const editarItemNombre = async (id: number, val: string) => {
+  const nameObj = {
+    nombre: val,
+  };
+  console.log('editarItemNombre', id, nameObj);
+  await clientesStore.updateCliente(id, nameObj);
+};
+
+const editarItemApellido = async (id: number, val: string) => {
+  const apellidoObj = {
+    apellido: val,
+  };
+  console.log('editarItemApellido', id, apellidoObj);
+  await clientesStore.updateCliente(id, apellidoObj);
+};
+
+const editarItemCorreo = async (id: number, val: string) => {
+  const correoObj = {
+    correo: val,
+  };
+  console.log('editarItemCorreo', id, correoObj);
+  await clientesStore.updateCliente(id, correoObj);
+};
+const editarItemCelular = async (id: number, val: string) => {
+  const celularObj = {
+    celular: val,
+  };
+  console.log('editarItemCelular', id, celularObj);
+  await clientesStore.updateCliente(id, celularObj);
+};
 
 const dialogVisible = ref<boolean>(false);
 
@@ -148,11 +282,6 @@ const columns = [
     field: 'celular',
     name: 'celular',
     label: 'celular',
-  },
-  {
-    field: 'update',
-    name: 'update',
-    label: 'update',
   },
   {
     field: 'delete',

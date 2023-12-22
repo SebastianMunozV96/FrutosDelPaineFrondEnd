@@ -11,16 +11,15 @@ export type Producto = {
 export type ProductoWithoutCategorias = Omit<Producto, 'Categorias_id'>;
 
 export type ProductoWIthCategoria = Producto & {
-
-  Categorias: Categoria,
-  cantidad: number
-}
+  Categorias: Categoria;
+  cantidad: number;
+};
 
 export type CrearProducto = Omit<Producto, 'id'>;
 
 export type ProductoDelete = Producto;
 
-export type ProductoUpdate = Producto;
+export type ProductoUpdate = Partial<Producto>;
 
 //----------Categoria de productos----------//
 
@@ -33,4 +32,4 @@ export type CreateCategoria = Omit<Categoria, 'id'>;
 
 export type CategoriaDelete = Categoria;
 
-export type CategoriaUpdate = Categoria;
+export type CategoriaUpdate = Partial<Categoria>;

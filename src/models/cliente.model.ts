@@ -12,4 +12,4 @@ export type ClienteInsert = Omit<Cliente, 'id'>;
 
 export type ClienteDelete = Cliente;
 
-export type ClienteUpdate = Cliente;
+export type ClienteUpdate = Partial<Cliente>;
