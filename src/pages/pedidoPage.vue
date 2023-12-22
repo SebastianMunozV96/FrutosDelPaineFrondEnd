@@ -9,22 +9,25 @@ import { ProductoWIthCategoria } from '../models/producto.model';
 import { useVentasStore } from 'src/stores/ventas';
 
 const storeProductos = useProductosStore();
-const ventasStore = useVentasStore()
+const ventasStore = useVentasStore();
 const { productos } = storeToRefs(storeProductos);
 
 const ventasRow = ref<Venta[]>([]);
-const metodosPago = ref<{ label: string, value: number }[]>([])
+const metodosPago = ref<{ label: string; value: number }[]>([]);
 // const celularPedido = ref(false);
 
 //productos
 
 const formatMoneyCLP = (valor: number) => {
-  return new Intl.NumberFormat('es-CL', {currency: 'CLP', style: 'currency'}).format(valor)
-}
+  return new Intl.NumberFormat('es-CL', {
+    currency: 'CLP',
+    style: 'currency',
+  }).format(valor);
+};
 
 const selected = ref<ProductoWIthCategoria[]>([]);
 const filter = ref();
-const groupMetodo = ref()
+const groupMetodo = ref();
 
 const columns = ref();
 
@@ -65,7 +68,7 @@ const totalPagar = computed(() =>
 );
 
 onMounted(async () => {
-  ventasStore.getAllMetodosDePage()
+  ventasStore.getAllMetodosDePage();
   storeProductos.getProductos();
   ventasRow.value = await geVenta();
   columns.value = Object.keys(ventasRow.value).map((key) => ({
@@ -173,7 +176,9 @@ watch(selected, (newValue, oldValue) => {
         <!-- metodos de pago -->
         <q-card>
           <q-card-section>
-            <div class="text-h6">Total a pagar {{ formatMoneyCLP(totalPagar) }}</div>
+            <div class="text-h6">
+              Total a pagar {{ formatMoneyCLP(totalPagar) }}
+            </div>
           </q-card-section>
         </q-card>
         <q-card class="">
@@ -182,14 +187,18 @@ watch(selected, (newValue, oldValue) => {
           </q-card-section>
 
           <q-card-section class="row justify-between">
-            <div class=" q-gutter-sm row">
+            <div class="q-gutter-sm row">
               <!-- v-for de metodos de pago -->
-              <q-option-group class="col" type="radio" v-model="groupMetodo" :options="ventasStore.metodosDePage" />
+              <q-option-group
+                class="col"
+                type="radio"
+                v-model="groupMetodo"
+                :options="ventasStore.metodosDePage"
+              />
             </div>
             <q-btn color="blue" label="Pagar"> </q-btn>
           </q-card-section>
         </q-card>
-
       </div>
     </div>
   </div>

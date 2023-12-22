@@ -48,7 +48,7 @@
               title="Editar nombre"
               buttons
               persistent
-              @save="(val: string) => editarItemNombre(props.row.nombre, val)"
+              @save="(val: string) => editarItemNombre(props.row.id, val)"
             >
               <q-input
                 v-model="scope.value"
@@ -70,7 +70,7 @@
               title="Editar apellido"
               buttons
               persistent
-              @save="(val: string) => editarItemApellido(props.row.apellido, val)"
+              @save="(val: string) => editarItemApellido(props.row.id, val)"
             >
               <q-input
                 v-model="scope.value"
@@ -92,7 +92,7 @@
               title="Editar correo"
               buttons
               persistent
-              @save="(val: string) => editarItemCorreo(props.row.correo, val)"
+              @save="(val: string) => editarItemCorreo(props.row.id, val)"
             >
               <q-input
                 v-model="scope.value"
@@ -117,7 +117,7 @@
               title="Editar celular"
               buttons
               persistent
-              @save="(val: string) => editarItemCelular(props.row.celular, val)"
+              @save="(val: string) => editarItemCelular(props.row.id, val)"
             >
               <q-input
                 v-model="scope.value"

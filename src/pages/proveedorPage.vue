@@ -26,7 +26,7 @@
               title="Editar rut"
               buttons
               persistent
-              @save="(val:number) => editarItemRut(props.row.rut, val)"
+              @save="(val:number) => proveedorStore.updateProveedor(props.row.id, {rut:val})"
             >
               <q-input
                 v-model="scope.value"
@@ -48,7 +48,7 @@
               title="Editar giro"
               buttons
               persistent
-              @save="(val:number) => editarItemGiro(props.row.giro , val)"
+              @save="(val:number) => proveedorStore.updateProveedor(props.row.id , {giro:val})"
             >
               <q-input
                 v-model="scope.value"
@@ -69,7 +69,7 @@
               title="Editar nombre"
               buttons
               persistent
-              @save="(val: string) => editarItemNombre(props.row.nombre, val)"
+              @save="(val: string) => proveedorStore.updateProveedor(props.row.id, {nombre:val})"
             >
               <q-input
                 v-model="scope.value"
@@ -91,7 +91,7 @@
               title="Editar telefono"
               buttons
               persistent
-              @save="(val: number) => editarItemTelefono(props.row.telefono, val)"
+              @save="(val: number) => proveedorStore.updateProveedor(props.row.id, {telefono:val})"
             >
               <q-input
                 v-model="scope.value"
@@ -112,7 +112,7 @@
               title="Editar correo"
               buttons
               persistent
-              @save="(val: string) => editarItemCorreo(props.row.correo , val)"
+              @save="(val: string) => proveedorStore.updateProveedor(props.row.id , {correo:val})"
             >
               <q-input
                 v-model="scope.value"
@@ -133,7 +133,7 @@
               title="Editar pagina Web"
               buttons
               persistent
-              @save="(val: string) => editarItemPaginaWeb(props.row.pagina_web, val)"
+              @save="(val: string) => proveedorStore.updateProveedor(props.row.id, {pagina_web:val})"
             >
               <q-input
                 v-model="scope.value"
@@ -152,7 +152,7 @@
               size="md"
               color="red"
               label="Eliminar "
-              @click="deleteProveedor(props.row.id)"
+              @click="proveedorStore.deleteProveedor(props.row.id)"
             >
               <q-icon name="delete" />
             </q-btn>
