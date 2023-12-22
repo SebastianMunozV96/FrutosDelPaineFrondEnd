@@ -41,7 +41,11 @@ const routes: RouteRecordRaw[] = [
         path: '/colaboradores',
         name: 'colaboradores',
         component: () => import('pages/colaboradorPage.vue'),
-      },
+      }, {
+        path: '/ventas',
+        name: 'ventas',
+        component: () => import('pages/listaPedidoPages.vue')
+      }
     ],
   },
   {
@@ -52,8 +56,9 @@ const routes: RouteRecordRaw[] = [
       {
         path: '',
         name: 'login',
-        component: () => import('pages/LoginPage.vue') }
-      ],
+        component: () => import('pages/LoginPage.vue')
+      }
+    ],
   },
 
   // Always leave this as last one,

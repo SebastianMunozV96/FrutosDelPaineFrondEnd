@@ -13,8 +13,8 @@
 
         <q-toolbar-title> </q-toolbar-title>
 
-        <q-chip color="orange" text-color="white" :icon="iconRol">
-          {{ authStore.username }}
+        <q-chip color="orange" text-color="white" :icon="authStore.getIconRol">
+          {{ authStore.getUserName }}
         </q-chip>
         <q-btn flat round dense icon="logout" @click="logOut()" />
       </q-toolbar>
@@ -39,7 +39,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import EssentialLink from 'components/EssentialLink.vue';
 import { EssentialLinkProps } from 'src/components/models';
 import { useAuthStore } from 'src/stores/auth';
@@ -47,7 +47,6 @@ import { useRouter } from 'vue-router';
 const authStore = useAuthStore();
 const route = useRouter()
 
-const iconRol = authStore.rol == "admin" ? "admin_panel_settings" : "person";
 
 const logOut = () => {
   authStore.logout()
@@ -79,7 +78,11 @@ const essentialLinks: EssentialLinkProps[] = [
     title: 'Colaboradores',
     icon: 'group',
     link: 'colaboradores',
-  },
+  },{
+    title: 'Ventas',
+    link: 'ventas',
+    icon:'trending_up'
+  }
 ];
 
 const leftDrawerOpen = ref(false);
@@ -87,4 +90,5 @@ const leftDrawerOpen = ref(false);
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 }
+
 </script>

@@ -28,11 +28,13 @@ export const useAuthStore = defineStore('auth', () => {
   const idToken = ref<string>('')
   const username = ref<string>('')
   const rol = ref<string>('')
+  const iconRol = ref<string>('')
 
   // getters
   const getToken = computed(() => idToken.value || localStorage.getItem('token'))
-  const getUserName = computed(() => username.value || localStorage.getItem('usuario'))
+  const getUserName = computed(() => username.value || LocalStorage.getItem('username'))
   const getRol = computed(() => rol.value || localStorage.getItem('rol'))
+  const getIconRol = computed(() => iconRol.value || rol.value == "admin" ? "admin_panel_settings" : "person")
 
   //actions
   async function signInUser(user: { correo: string, password: string }) {
@@ -89,6 +91,7 @@ export const useAuthStore = defineStore('auth', () => {
     idToken,
     username,
     rol,
+    getIconRol,
     getToken,
     getUserName,
     getRol,

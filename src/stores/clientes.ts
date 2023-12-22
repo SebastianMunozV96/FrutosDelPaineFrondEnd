@@ -1,4 +1,4 @@
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
 import { api } from 'src/boot/axios';
 import {
@@ -10,6 +10,8 @@ import {
 export const useClientesStore = defineStore('clientes', () => {
   // state
   const clientes = ref<Cliente[]>([])
+
+  const clientesValueLabel = computed(() => clientes.value.map((c) =>({value: c.id, label: `${c.nombre} ${c.apellido}`})))
 
   // actions
   const getClientes = async () => {
@@ -40,6 +42,7 @@ export const useClientesStore = defineStore('clientes', () => {
 
   return {
     clientes,
+    clientesValueLabel,
     updateCliente,
     deleteCliente,
     getClientes,

@@ -1,30 +1,38 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from 'vue';
 import { geVenta } from '../composable/venta.service';
-import { Venta } from '../models/venta.model';
+import { Venta, Estadopago } from '../models/venta.model';
 
 import { useProductosStore } from 'src/stores/productos';
 import { storeToRefs } from 'pinia';
 import { ProductoWIthCategoria } from '../models/producto.model';
 import { useVentasStore } from 'src/stores/ventas';
+import { useClientesStore } from '../stores/clientes';
 
 const storeProductos = useProductosStore();
-const ventasStore = useVentasStore()
+const ventasStore = useVentasStore();
+const clientesStore = useClientesStore();
 const { productos } = storeToRefs(storeProductos);
 
 const ventasRow = ref<Venta[]>([]);
-const metodosPago = ref<{ label: string, value: number }[]>([])
+const metodosPago = ref<{ label: string; value: number }[]>([]);
 // const celularPedido = ref(false);
 
 //productos
 
 const formatMoneyCLP = (valor: number) => {
-  return new Intl.NumberFormat('es-CL', {currency: 'CLP', style: 'currency'}).format(valor)
-}
+  return new Intl.NumberFormat('es-CL', {
+    currency: 'CLP',
+    style: 'currency',
+  }).format(valor);
+};
 
 const selected = ref<ProductoWIthCategoria[]>([]);
+const selectedClient = ref<{value: number, label: string}>();
 const filter = ref();
-const groupMetodo = ref()
+const groupMetodo = ref();
+
+const clientes = ref();
 
 const columns = ref();
 
@@ -64,9 +72,40 @@ const totalPagar = computed(() =>
   }, 0)
 );
 
+const procesar = () => {
+  const ivaCalc: number = totalPagar.value - (totalPagar.value * 0.19);
+  const productosDetalleVenta = selected.value.map((p) => ({
+    Producto_id: p.id,
+    cantidad: p.cantidad,
+    precio_neto: p.precio_neto,
+    precio_total_neto: p.precio_neto * p.cantidad
+  }));
+
+  const venta = {
+    neto: totalPagar.value,
+    iva: ivaCalc,
+    total: totalPagar.value + ivaCalc,
+    Clientes_id: selectedClient.value?.value,
+    Usuarios_id: 1,
+    Estado_Pago_id: 1,
+    Detalle_venta: [...productosDetalleVenta],
+  };
+  console.log(venta)
+  ventasStore.createPedido(venta).then((result) => console.log(result))
+};
+
 onMounted(async () => {
-  ventasStore.getAllMetodosDePage()
+  ventasStore.getAllMetodosDePage();
   storeProductos.getProductos();
+  clientesStore
+    .getClientes()
+    .then(
+      (response) =>
+        (clientes.value = response.map((c) => ({
+          value: c.id,
+          label: `${c.nombre} ${c.apellido}`,
+        })))
+    );
   ventasRow.value = await geVenta();
   columns.value = Object.keys(ventasRow.value).map((key) => ({
     field: key,
@@ -114,10 +153,30 @@ watch(selected, (newValue, oldValue) => {
 
       <div class="col">
         <q-card>
-          <q-card-section>
-            <div class="text-h6">Cliente</div>
+          <!-- clientes -->
+          <q-card-section class="row justify-center">
+            <div class="text-h6 col-6">Cliente</div>
+            <q-select
+              square
+              class="col"
+              clearable
+              v-model="selectedClient"
+              :options="clientes"
+            >
+              <template v-slot:prepend>
+                <q-icon name="person" />
+              </template>
+              <template v-slot:no-option>
+                <q-item>
+                  <q-item-section class="text-italic text-grey">
+                    Sin clientes
+                  </q-item-section>
+                </q-item>
+              </template>
+            </q-select>
           </q-card-section>
         </q-card>
+        <!-- productos seleccionados -->
         <q-table
           class=""
           title="Productos de cliente"
@@ -173,7 +232,9 @@ watch(selected, (newValue, oldValue) => {
         <!-- metodos de pago -->
         <q-card>
           <q-card-section>
-            <div class="text-h6">Total a pagar {{ formatMoneyCLP(totalPagar) }}</div>
+            <div class="text-h6">
+              Total a pagar {{ formatMoneyCLP(totalPagar) }}
+            </div>
           </q-card-section>
         </q-card>
         <q-card class="">
@@ -182,14 +243,18 @@ watch(selected, (newValue, oldValue) => {
           </q-card-section>
 
           <q-card-section class="row justify-between">
-            <div class=" q-gutter-sm row">
+            <div class="q-gutter-sm row">
               <!-- v-for de metodos de pago -->
-              <q-option-group class="col" type="radio" v-model="groupMetodo" :options="ventasStore.metodosDePage" />
+              <q-option-group
+                class="col"
+                type="radio"
+                v-model="groupMetodo"
+                :options="ventasStore.metodosDePage"
+              />
             </div>
-            <q-btn color="blue" label="Pagar"> </q-btn>
+            <q-btn color="blue" @click="procesar" label="Pagar"> </q-btn>
           </q-card-section>
         </q-card>
-
       </div>
     </div>
   </div>

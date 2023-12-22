@@ -20,7 +20,7 @@ const onSubmit = async () => {
   console.log("result login: ", result)
   if (result!.ok) {
     message.value = 'inicio exitoso!'
-    router.push({ name: 'main' });
+    router.push({ name: 'pedidos' });
   } else {
     message.value = 'No existe usuario!';
   }
